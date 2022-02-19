@@ -1,0 +1,17 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: sans-serif;
+}
+
+canvas {
+  background-color: grey;
+}
