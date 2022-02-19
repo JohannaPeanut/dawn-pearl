@@ -1,13 +1,12 @@
 class Player {
   constructor(gameInstance) {
     this.game = gameInstance;
-    this.x = 0;
+    this.x = 40; //problem: why is ball not starting at actual x position when I change speed/acc?
     this.y = 200;
-    //this.y = 400;
     this.radius = 20;
-    this.speedY = 40;
-    this.speedX = 40;
-    this.uplift = 10;
+    this.speedY = 0;
+    this.speedX = 0;
+    this.uplift = 0;
     this.accelerationX = 0;
     this.accelerationY = 0;
     this.friction = 0.1;
@@ -17,26 +16,29 @@ class Player {
 
   //make player constantly "fall" until she hits the bottom
   runLogic() {
+    if (this.y + this.radius < this.game.canvas.height) {
+    this.y += 1;
+    }
     const keys = this.game.keysDown;
     for (const key of keys) {
       switch (key) {
         case 'ArrowUp':
           if (this.y - this.radius > 0 + this.uplift) {
-            this.accelerationY = -1.5;
+            this.accelerationY = -1;
           } else {
             this.y = 0 + this.radius;
           }
           break;
         case 'ArrowRight':
           if (this.x + this.radius <= this.game.canvas.width - this.uplift) {
-            this.accelerationX = +1.5;
+            this.accelerationX = +0.5;
           } else {
             this.x = this.game.canvas.width - this.radius; // problem: ball disappears
           }
           break;
         case 'ArrowLeft':
           if (this.x - this.radius > 0 + this.uplift) {
-            this.accelerationX = -1.5;
+            this.accelerationX = -0.5;
           } else {
             this.x = 0 + this.radius; // problem: ball disappears
           }
@@ -96,8 +98,6 @@ class Player {
     this.game.context.closePath();
     this.game.context.fill();
     this.game.context.restore();
-    //this.frame++;
-    //this.game.context.save();
-    //this.game.context.restore();
+    
   }
 }

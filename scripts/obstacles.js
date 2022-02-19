@@ -17,6 +17,8 @@ class Obstacle {
   checkCollision (element) {
     // We'll use this to check for intersections between player and enemy and spell and enemy
     return (
+
+        //problem: certain obstacles are not checked at the top end
       // is right edge of element in front of left edge of enemy
       element.x + element.radius > this.x &&
       // is left edge of element before of right edge of enemy
