@@ -2,7 +2,7 @@ class Ball {
   constructor(gameInstance) {
     this.game = gameInstance;
     this.radius = 20;
-    this.x = 450;
+    this.x = 50;
     this.y = this.game.canvas.height - this.radius - 200;
     this.player = this.game.player;
     this.connection = false;
@@ -12,10 +12,12 @@ class Ball {
     if (this.checkCollision(this.player) && this.connection === false) {
       this.connection = true;
     }
-    if (this.connection) {
+    if (this.connection && this.game.goal.hit === false) {
       this.runLogicConnected();
-    } else {
+    } else if (this.connection === false && this.game.goal.hit === false) {
       this.runLogicDisconnected();
+    } else {
+        this.runLogicHitGoal();
     }
   }
 
@@ -28,6 +30,11 @@ class Ball {
     if (this.y <= this.game.canvas.height - this.radius) {
       this.y += 3;
     }
+  }
+
+  runLogicHitGoal() {
+    this.x = this.game.goal.x;
+    this.y = this.game.goal.y;
   }
 
   loseConnection() {

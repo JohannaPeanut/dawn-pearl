@@ -3,7 +3,7 @@ class Obstacle {
     this.game = gameInstance;
     this.x = x;
     this.y = y;
-    this.width = 10;
+    this.width = 30;
     this.height = height;
   }
 
@@ -14,11 +14,10 @@ class Obstacle {
     this.game.context.restore();
   }
 
-  checkCollision (element) {
+  checkCollision(element) {
     // We'll use this to check for intersections between player and obstacle
     return (
-
-        //problem: certain obstacles are not checked at the top end
+      //problem: certain obstacles are not checked at the top end
       // is right edge of element in front of left edge of enemy
       element.x + element.radius > this.x &&
       // is left edge of element before of right edge of enemy

@@ -1,8 +1,8 @@
 class Player {
   constructor(gameInstance) {
     this.game = gameInstance;
-    this.x = 400; //problem: why is ball not starting at actual x position when I change speed/acc?
-    this.y = 400;
+    this.x = 50; //problem: why is ball not starting at actual x position when I change speed/acc?
+    this.y = 350;
     this.radius = 20;
     this.speedY = 0;
     this.speedX = 0;
@@ -14,7 +14,7 @@ class Player {
   runLogic() {
     //gravity
     if (this.y + this.radius + this.accelerationY < this.game.canvas.height) {
-      this.accelerationY = +0.3; 
+      //this.accelerationY = +0.3;  //off for testing
     }else {
       this.y = this.game.canvas.height - this.radius;
     }
