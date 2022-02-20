@@ -1,47 +1,51 @@
 class Player {
   constructor(gameInstance) {
     this.game = gameInstance;
-    this.x = 40; //problem: why is ball not starting at actual x position when I change speed/acc?
-    this.y = 200;
+    this.x = 400; //problem: why is ball not starting at actual x position when I change speed/acc?
+    this.y = 400;
     this.radius = 20;
     this.speedY = 0;
     this.speedX = 0;
-    this.uplift = 0;
     this.accelerationX = 0;
     this.accelerationY = 0;
     this.friction = 0.1;
-
-    //this.frame = 1;
   }
 
-  //make player constantly "fall" until she hits the bottom
   runLogic() {
-    if (this.y + this.radius < this.game.canvas.height) {
-    this.y += 1;
+    //gravity
+    if (this.y + this.radius + this.accelerationY < this.game.canvas.height) {
+      this.accelerationY = +0.3; 
+    }else {
+      this.y = this.game.canvas.height - this.radius;
     }
+    //player control
     const keys = this.game.keysDown;
     for (const key of keys) {
       switch (key) {
         case 'ArrowUp':
-          if (this.y - this.radius > 0 + this.uplift) {
+          if (this.y - this.radius > 0) {
             this.accelerationY = -1;
           } else {
             this.y = 0 + this.radius;
           }
           break;
         case 'ArrowRight':
-          if (this.x + this.radius <= this.game.canvas.width - this.uplift) {
+          if (this.x + this.radius <= this.game.canvas.width) {
             this.accelerationX = +0.5;
           } else {
             this.x = this.game.canvas.width - this.radius; // problem: ball disappears
           }
           break;
         case 'ArrowLeft':
-          if (this.x - this.radius > 0 + this.uplift) {
+          if (this.x - this.radius > 0) {
             this.accelerationX = -0.5;
           } else {
             this.x = 0 + this.radius; // problem: ball disappears
           }
+          break;
+        case 'ArrowDown':
+          this.accelerationY = +0.5; // only added arrow down for testing
+
           break;
       }
     }
@@ -66,10 +70,12 @@ class Player {
       if (verticalCollision) {
         newSpeedY = 0;
         newY = y;
+        this.game.ball.loseConnection();
       }
       if (horizontalCollision) {
         newSpeedX = 0;
         newX = x;
+        this.game.ball.loseConnection();
       }
     }
     /*
@@ -98,6 +104,5 @@ class Player {
     this.game.context.closePath();
     this.game.context.fill();
     this.game.context.restore();
-    
   }
 }

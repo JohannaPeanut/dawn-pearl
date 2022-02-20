@@ -9,6 +9,7 @@ class Game {
     this.canvas = canvasElement;
     this.context = canvasElement.getContext('2d');
     this.player = new Player(this);
+    this.ball = new Ball(this);
     this.obstacles = [];
     this.keysDown = [];
   }
@@ -76,6 +77,7 @@ class Game {
 
   runLogic() {
     this.player.runLogic();
+    this.ball.runLogic();
 
     for (const obstacle of this.obstacles) {
       const obstacleAndPlayerCollision = obstacle.checkCollision(this.player);
@@ -89,6 +91,7 @@ class Game {
   draw() {
     this.clean();
     this.player.draw();
+    this.ball.draw();
     for (const obstacle of this.obstacles) {
       obstacle.draw();
     }

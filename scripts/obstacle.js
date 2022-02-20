@@ -15,7 +15,7 @@ class Obstacle {
   }
 
   checkCollision (element) {
-    // We'll use this to check for intersections between player and enemy and spell and enemy
+    // We'll use this to check for intersections between player and obstacle
     return (
 
         //problem: certain obstacles are not checked at the top end
