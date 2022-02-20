@@ -17,7 +17,7 @@ class Ball {
     } else if (this.connection === false && this.game.goal.hit === false) {
       this.runLogicDisconnected();
     } else {
-        this.runLogicHitGoal();
+      this.runLogicHitGoal();
     }
   }
 
@@ -46,6 +46,14 @@ class Ball {
 
   draw() {
     this.game.context.save();
+    /* //radial gradient
+    const radgrad = this.game.context.createRadialGradient(
+      this.x,this.y,this.radius-10, this.x+5,this.y+5,this.radius+10);
+    radgrad.addColorStop(0, '#A7D30C');
+    radgrad.addColorStop(0.9, '#019F62');
+    radgrad.addColorStop(1, 'rgba(1,159,98,0)');
+    this.game.context.fillStyle = radgrad;
+    */
     this.game.context.fillStyle = 'red';
     this.game.context.beginPath();
     game.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
@@ -55,15 +63,15 @@ class Ball {
   }
 
   checkCollision(element) {
-    // We'll use this to check for intersections between player and ball
+    // check for intersections between player and ball
     return (
-      // is right edge of element in front of left edge of enemy
+      // is right edge of element in front of left edge of ball
       element.x + element.radius > this.x - this.radius &&
-      // is left edge of element before of right edge of enemy
+      // is left edge of element before of right edge of ball
       element.x - element.radius < this.x + this.radius &&
-      // is bottom edge of element below top edge of enemy
+      // is bottom edge of element below top edge of ball
       element.y + element.radius > this.y - this.radius &&
-      // is top edge of element above bottom edge of enemy
+      // is top edge of element above bottom edge of ball
       element.y - element.radius < this.y + this.radius
     );
   }

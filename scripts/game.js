@@ -4,6 +4,8 @@
 // and a draw method, that is responsible for drawing
 // that element to the canvas
 
+
+
 class Game {
   constructor(canvasElement) {
     this.canvas = canvasElement;
@@ -11,11 +13,15 @@ class Game {
     this.player = new Player(this);
     this.ball = new Ball(this);
     this.goal = new Goal(this);
+    this.duration = 300; //sec*100
+    this.startTime = 0;
+    this.timer = this.duration;
     this.obstacles = [];
     this.keysDown = [];
   }
 
   start() {
+    this.startTime = Date.now();
     this.addObstacles();
     this.enableControls();
     this.loop();
@@ -31,31 +37,6 @@ class Game {
   }
 
   enableControls() {
-    /*
-    window.addEventListener('keydown', (event) => {
-      const code = event.code;
-      switch (code) {
-        case 'ArrowUp':
-          event.preventDefault();
-          if (this.player.y - this.player.radius >= 0 + this.player.uplift) {
-            this.player.y -= this.player.uplift;
-          }
-          break;
-        case 'ArrowRight':
-          event.preventDefault();
-          if (this.player.x + this.player.radius <= 650 - this.player.uplift) {
-            this.player.x += this.player.uplift;
-          }
-          break;
-        case 'ArrowLeft':
-          event.preventDefault();
-          if (this.player.x - this.player.radius >= 0 + this.player.uplift) {
-            this.player.x -= this.player.uplift;
-          }
-          break;
-      }
-    });
-    */
     const keysToPreventDefaultAction = ['ArrowUp', 'ArrowRight', 'ArrowLeft'];
     window.addEventListener('keydown', (event) => {
       if (keysToPreventDefaultAction.includes(event.code)) {
@@ -72,8 +53,20 @@ class Game {
     window.requestAnimationFrame(() => {
       this.runLogic();
       this.draw();
+      this.runTimer();
       this.loop();
     });
+  }
+
+  runTimer() {
+    const timePassed = Math.floor((Date.now() - this.startTime)/100);
+    if (this.timer > 0) {
+      this.timer = this.duration - timePassed;
+    } else {
+      this.timer = 0;
+    }
+    this.context.font = '32px sans-serif';
+    this.context.fillText(this.timer, 150, 450);
   }
 
   runLogic() {
@@ -90,12 +83,34 @@ class Game {
     }
   }
 
+  drawBackground() {
+    this.context.save();
+    const gradient = this.context.createLinearGradient(
+      0,
+      this.canvas.height,
+      0,
+      0
+    );
+
+    gradient.addColorStop(0, `rgba(255, 215, 0, ${1-(this.timer/this.duration-0.3)})`);
+    gradient.addColorStop(0.2, `rgba(255, 248, 220, ${1-(this.timer/this.duration-0.3)})`);
+    gradient.addColorStop(0.6, `rgba(128, 213, 252, 1)`);
+
+    this.context.fillStyle = gradient;
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.fillStyle = `rgba(0,0,0, ${this.timer/this.duration-0.2})`;
+    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.context.restore();
+    
+  }
+
   draw() {
     this.clean();
+    this.drawBackground();
     this.goal.draw();
     this.player.draw();
     this.ball.draw();
-    
+
     for (const obstacle of this.obstacles) {
       obstacle.draw();
     }
