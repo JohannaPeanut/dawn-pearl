@@ -1,7 +1,7 @@
 class Player {
   constructor(gameInstance) {
     this.game = gameInstance;
-    this.x = 50; //problem: why is ball not starting at actual x position when I change speed/acc?
+    this.x = 550; //problem: why is ball not starting at actual x position when I change speed/acc?
     this.y = 350;
     this.radius = 20;
     this.speedY = 0;

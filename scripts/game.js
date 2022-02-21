@@ -65,8 +65,8 @@ class Game {
     } else {
       this.timer = 0;
     }
-    this.context.font = '32px sans-serif';
-    this.context.fillText(this.timer, 150, 450);
+    //this.context.font = '32px sans-serif';
+    //this.context.fillText(this.timer, 150, 450);
   }
 
   runLogic() {

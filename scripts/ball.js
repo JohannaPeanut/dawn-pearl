@@ -2,7 +2,7 @@ class Ball {
   constructor(gameInstance) {
     this.game = gameInstance;
     this.radius = 20;
-    this.x = 50;
+    this.x = 450;
     this.y = this.game.canvas.height - this.radius - 200;
     this.player = this.game.player;
     this.connection = false;
