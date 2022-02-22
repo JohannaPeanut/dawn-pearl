@@ -9,9 +9,37 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: sans-serif;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 24px;
 }
 
 canvas {
   background-color: rgb(15, 0, 203);
+}
+
+button {
+  color: yellow;
+  border: yellow 1px solid;
+  background-color: black;
+  padding: 15px;
+  font-family: inherit;
+  font-size: inherit
+}
+
+p{
+  color: yellow;
+  background-color: black;
+  padding: 15px;
+  font-family: inherit;
+  font-size: inherit
+}
+
+.screen {
+  background-color: black;
+  width: 650px;
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

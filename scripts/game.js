@@ -4,27 +4,42 @@
 // and a draw method, that is responsible for drawing
 // that element to the canvas
 
-
-
 class Game {
-  constructor(canvasElement) {
+  constructor(canvasElement, screens) {
     this.canvas = canvasElement;
     this.context = canvasElement.getContext('2d');
     this.player = new Player(this);
     this.ball = new Ball(this);
     this.goal = new Goal(this);
-    this.duration = 300; //sec*100
+    this.duration = 100; //sec*10
     this.startTime = 0;
     this.timer = this.duration;
+    this.screens = screens;
+    this.running = false;
     this.obstacles = [];
     this.keysDown = [];
   }
 
   start() {
+    this.running = true;
     this.startTime = Date.now();
+    this.timer = this.duration;
     this.addObstacles();
     this.enableControls();
+    this.displayScreen('playing');
     this.loop();
+  }
+
+  displayScreen(name) {
+    for (let screenName in this.screens) {
+      this.screens[screenName].style.display = 'none';
+    }
+    this.screens[name].style.display = '';
+  }
+
+  lose() {
+    this.running = false;
+    this.displayScreen('end');
   }
 
   addObstacles() {
@@ -54,12 +69,12 @@ class Game {
       this.runLogic();
       this.draw();
       this.runTimer();
-      this.loop();
+      if (this.running) this.loop();
     });
   }
 
   runTimer() {
-    const timePassed = Math.floor((Date.now() - this.startTime)/100);
+    const timePassed = Math.floor((Date.now() - this.startTime) / 100);
     if (this.timer > 0) {
       this.timer = this.duration - timePassed;
     } else {
@@ -81,6 +96,11 @@ class Game {
         console.log('collision!');
       }
     }
+
+    if (this.timer <= 0) {
+      console.log('timer is 0')
+      this.lose();
+    }
   }
 
   drawBackground() {
@@ -92,16 +112,21 @@ class Game {
       0
     );
 
-    gradient.addColorStop(0, `rgba(255, 215, 0, ${1-(this.timer/this.duration-0.3)})`);
-    gradient.addColorStop(0.2, `rgba(255, 248, 220, ${1-(this.timer/this.duration-0.3)})`);
+    gradient.addColorStop(
+      0,
+      `rgba(255, 215, 0, ${1 - (this.timer / this.duration - 0.3)})`
+    );
+    gradient.addColorStop(
+      0.2,
+      `rgba(255, 248, 220, ${1 - (this.timer / this.duration - 0.3)})`
+    );
     gradient.addColorStop(0.6, `rgba(128, 213, 252, 1)`);
 
     this.context.fillStyle = gradient;
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    this.context.fillStyle = `rgba(0,0,0, ${this.timer/this.duration-0.2})`;
+    this.context.fillStyle = `rgba(0,0,0, ${this.timer / this.duration - 0.2})`;
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.restore();
-    
   }
 
   draw() {

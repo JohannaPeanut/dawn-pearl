@@ -7,7 +7,16 @@
     <link href="styles/style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <canvas width="650" height="450"></canvas>
+    <div class="screen" id="start-screen">
+      <button>s t a r t g a m e</button>
+    </div>
+    <div class="screen" id="playing-screen" style="display: none">
+      <canvas width="650" height="450"></canvas>
+    </div>
+    <div class="screen" id="game-over-screen" style="display: none;">
+      <p>g a m e o v e r </p>
+      <button>t r y a g a i n</button>
+    </div>
     <script src="scripts/goal.js"></script>
     <script src="scripts/ball.js"></script>
     <script src="scripts/obstacle.js"></script>
