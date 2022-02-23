@@ -59,7 +59,7 @@ class Player {
     let newX = x + newSpeedX;
     let newY = y + newSpeedY;
     for (let obstacle of this.game.obstacles) {
-      const horizontalCollision = obstacle.checkCollision({
+      /* const horizontalCollision = obstacle.checkCollision({
         ...this,
         x: newX
       });
@@ -70,13 +70,13 @@ class Player {
       if (verticalCollision) {
         newSpeedY = 0;
         newY = y;
-        this.game.ball.loseConnection();
+        //this.game.ball.loseConnection();
       }
       if (horizontalCollision) {
         newSpeedX = 0;
         newX = x;
-        this.game.ball.loseConnection();
-      }
+        //this.game.ball.loseConnection();
+      } */
     }
     /*
     this.x = newX;

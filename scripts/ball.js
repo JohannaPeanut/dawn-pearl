@@ -1,4 +1,5 @@
 const clamp = (value, min, max) => Math.max(Math.min(value, max), min);
+
 const fps = 60;
 class Ball {
   constructor(gameInstance) {
@@ -16,6 +17,8 @@ class Ball {
 
   runLogic() {
     //problem wenn player mit obstacle kollidiert und gleichzeitig mit ball (diesen also aufnehmen will)
+    // problem solved maybe if player cant pick up ball when it is intersecting with obstacles
+    //tried avoid that buggy behavior with this.game.canvas.height - 1.5 * this.radius but then player cannot pick up ball when it is jumping....
     if (
       this.checkCollision(this.player) &&
       this.player.y > this.game.canvas.height - 1.5 * this.radius &&
@@ -35,6 +38,9 @@ class Ball {
   runLogicConnected() {
     this.x = this.player.x;
     this.y = this.player.y - this.player.radius - this.radius;
+    for (let obstacle of this.game.obstacles) {
+      if (obstacle.checkCollision(this)) this.loseConnection();
+    }
   }
 
   runLogicDisconnected() {
@@ -59,9 +65,28 @@ class Ball {
     ) {
       this.speedX = this.speedX * -0.94;
     }
-    /* if (this.y <= this.game.canvas.height - this.radius) {
-      this.y += 3;
-    } */
+    for (let obstacle of this.game.obstacles) {
+      if (obstacle.checkCollision(this)) {
+        const intersectingObstacle = this.whichObstale();
+        if (intersectingObstacle.x < this.x) {
+          //if intersecting obstacle is left from ball --> new clamp for right side of obstacle
+          this.x = clamp(
+            this.x,
+            this.radius + intersectingObstacle.x + intersectingObstacle.width,
+            this.game.canvas.width - this.radius
+          );
+          this.speedX = this.speedX * -0.94;
+        } else {
+          //if intersecting obstacle is right from ball --> new clamp for left side of obstacle
+          this.x = clamp(
+            this.x,
+            this.radius,
+            intersectingObstacle.x - this.radius
+          );
+          this.speedX = this.speedX * -0.94;
+        }
+      }
+    }
   }
 
   runLogicHitGoal() {
@@ -72,7 +97,12 @@ class Ball {
   loseConnection() {
     if (this.connection === true) {
       this.connection = false;
-      this.x += 2 * this.radius + 2; //problem: at the moment always "falls" to the right/ should fall to the left in case obstacle is on the right
+      const intersectingObstacle = this.whichObstale();
+      if (intersectingObstacle.x < this.x) {
+        this.x += 2 * this.radius + 2; // if obstacle is left from ball --> ball falls to the right
+      } else {
+        this.x -= 2 * this.radius + 2; // if obstacle is right from ball --> ball falls to the left
+      }
     }
   }
 
@@ -106,5 +136,11 @@ class Ball {
       // is top edge of element above bottom edge of ball
       element.y - element.radius < this.y + this.radius
     );
+  }
+
+  whichObstale() {
+    for (let obstacle of this.game.obstacles) {
+      if (obstacle.checkCollision(this)) return obstacle; //returns intersecting obstacle instance
+    }
   }
 }
