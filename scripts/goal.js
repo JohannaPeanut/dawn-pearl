@@ -7,20 +7,15 @@ class Goal {
     this.hit = false;
   }
 
-hitGoal() {
-    
+  hitGoal() {}
 
-       
-      
-}
-
-runLogic() {
+  runLogic() {
     if (this.checkCollisionWithBall()) {
-        this.hit = true;
-        this.game.ball.connection = false;
+      this.hit = true;
+      this.game.ball.connection = false;
     }
-}
-  
+  }
+
   draw() {
     this.game.context.save();
     this.game.context.fillStyle = 'black';
@@ -28,7 +23,12 @@ runLogic() {
     game.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
     this.game.context.closePath();
     this.game.context.fill();
-    this.game.context.fillRect(this.x - this.radius, this.y-this.radius, this.radius, this.radius*2)
+    this.game.context.fillRect(
+      this.x - this.radius,
+      this.y - this.radius,
+      this.radius,
+      this.radius * 2
+    );
     this.game.context.restore();
   }
 

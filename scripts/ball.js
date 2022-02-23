@@ -1,20 +1,31 @@
+const clamp = (value, min, max) => Math.max(Math.min(value, max), min);
+const fps = 60;
 class Ball {
   constructor(gameInstance) {
     this.game = gameInstance;
-    this.radius = 20;
-    this.x = 450;
-    this.y = this.game.canvas.height - this.radius - 200;
     this.player = this.game.player;
+    this.radius = 20;
+    this.x = 400;
+    this.y = 200; //this.game.canvas.height - this.radius - 200;
+    this.speedY = 100; // pixels per second
+    this.speedX = 50; // pixels per second
+    this.gravity = 4000; // pixels per second squared, accelerationY
+    this.accelerationX = 0; // pixels per second squared
     this.connection = false;
   }
 
   runLogic() {
-    if (this.checkCollision(this.player) && this.connection === false) {
+    //problem wenn player mit obstacle kollidiert und gleichzeitig mit ball (diesen also aufnehmen will)
+    if (
+      this.checkCollision(this.player) &&
+      this.player.y > this.game.canvas.height - 1.5 * this.radius &&
+      !this.connection
+    ) {
       this.connection = true;
     }
-    if (this.connection && this.game.goal.hit === false) {
+    if (this.connection && !this.game.goal.hit) {
       this.runLogicConnected();
-    } else if (this.connection === false && this.game.goal.hit === false) {
+    } else if (!this.connection && !this.game.goal.hit) {
       this.runLogicDisconnected();
     } else {
       this.runLogicHitGoal();
@@ -27,9 +38,30 @@ class Ball {
   }
 
   runLogicDisconnected() {
-    if (this.y <= this.game.canvas.height - this.radius) {
-      this.y += 3;
+    this.y = clamp(this.y, this.radius, this.game.canvas.height - this.radius);
+    this.x = clamp(this.x, this.radius, this.game.canvas.width - this.radius);
+
+    this.speedY += this.gravity / fps;
+    this.speedX += this.accelerationX / fps;
+
+    this.y += this.speedY / fps;
+    this.x += this.speedX / fps;
+
+    if (
+      this.y + this.radius > this.game.canvas.height ||
+      this.y - this.radius < 0
+    ) {
+      this.speedY = this.speedY * -0.94;
     }
+    if (
+      this.x + this.radius > this.game.canvas.width ||
+      this.x - this.radius < 0
+    ) {
+      this.speedX = this.speedX * -0.94;
+    }
+    /* if (this.y <= this.game.canvas.height - this.radius) {
+      this.y += 3;
+    } */
   }
 
   runLogicHitGoal() {

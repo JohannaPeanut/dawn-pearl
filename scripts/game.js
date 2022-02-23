@@ -11,7 +11,7 @@ class Game {
     this.player = new Player(this);
     this.ball = new Ball(this);
     this.goal = new Goal(this);
-    this.duration = 100; //sec*10
+    this.duration = 1000; //sec*10
     this.startTime = 0;
     this.timer = this.duration;
     this.screens = screens;
@@ -98,7 +98,6 @@ class Game {
     }
 
     if (this.timer <= 0) {
-      console.log('timer is 0')
       this.lose();
     }
   }

@@ -15,6 +15,8 @@ const screenElements = {
 
 const game = new Game(canvasElement, screenElements);
 
+game.start();
+
 startButton.addEventListener('click', () => {
   game.start();
 });
