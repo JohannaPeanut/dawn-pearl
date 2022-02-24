@@ -12,7 +12,7 @@ class Game {
     this.mousePlayer = new mousePlayer(this);
     this.ball = new Ball(this);
     this.goal = new Goal(this);
-    this.duration = 1000; //sec*10
+    this.duration = 500; //sec*10
     this.startTime = 0;
     this.timer = this.duration;
     this.screens = screens;
@@ -25,6 +25,8 @@ class Game {
     this.running = true;
     this.startTime = Date.now();
     this.timer = this.duration;
+    this.ball.x = 550;
+    this.ball.y = 200;
 
     this.addObstacles();
     this.enableControls();
@@ -49,7 +51,8 @@ class Game {
       new Obstacle(this, 200, 0, 200), //y value needs to be the upper end of obstacle!! (otherwise problem with collision test)
       new Obstacle(this, 350, 100, this.canvas.height),
       new Obstacle(this, 50, 250, this.canvas.height),
-      new Obstacle(this, 450, 150, 130)
+      new Obstacle(this, 450, 150, 130),
+      new Obstacle(this, 150, 150, 130)
     );
   }
 
@@ -66,27 +69,20 @@ class Game {
     });
 
     this.canvas.addEventListener('mousedown', (e) => {
-      console.log('mouse down');
-      this.mousePlayer.x = e.offsetX;
-      this.mousePlayer.y = e.offsetY;
       this.mousePlayer.isDown = true;
     });
     this.canvas.addEventListener('mousemove', (e) => {
-      if (this.mousePlayer.isDown === true) {
-        console.log('mouse move');
-        this.mousePlayer.drawLine(this.x, this.y, e.offsetX, e.offsetY);
         this.mousePlayer.x = e.offsetX;
         this.mousePlayer.y = e.offsetY;
+      if (this.mousePlayer.isDown === true) {
+
       }
     });
 
     this.canvas.addEventListener('mouseup', (e) => {
       if (this.mousePlayer.isDown === true) {
-        console.log('mouse up');
-        this.mousePlayer.drawLine(this.x, this.y, e.offsetX, e.offsetY);
-        this.mousePlayer.x = 0;
-        this.mousePlayer.y = 0;
         this.mousePlayer.isDown = false;
+        this.mousePlayer.isDraggingBall = false;
       }
     });
   }
@@ -161,6 +157,7 @@ class Game {
     this.drawBackground();
     this.goal.draw();
     this.player.draw();
+    this.mousePlayer.draw();
     this.ball.draw();
 
     for (const obstacle of this.obstacles) {

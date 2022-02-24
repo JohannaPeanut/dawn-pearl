@@ -1,20 +1,19 @@
 class mousePlayer {
   constructor(gameInstance) {
     this.game = gameInstance;
-    this.size = 5;
+    this.x = 0;
+    this.y = 0;
     this.isDown = false;
-    this.isDragingBall = false;
+    this.isDraggingBall = false;
   }
   draw() {
-    //this.context.fillStyle = 'red';
-    //this.context.fillRect(this.x, this.y, this.size, this.size);
+    
   }
 
   runLogic() {
     if (this.isDown) {
       if (this.checkCollisionWithBall()) {
-        console.log('touches ball');
-        this.isDragingBall = true;
+        if (!this.isDraggingBall) this.isDraggingBall = true;
       }
     }
   }
@@ -29,15 +28,4 @@ class mousePlayer {
     );
   }
 
-  drawLine(x1, y1, x2, y2) {
-    this.game.context.save();
-    this.game.context.beginPath();
-    this.game.context.strokeStyle = 'black';
-    this.game.context.lineWidth = this.size;
-    this.game.context.moveTo(x1, y1);
-    this.game.context.lineTo(x2, y2);
-    this.game.context.stroke();
-    this.game.context.closePath();
-    this.game.context.restore();
-  }
 }

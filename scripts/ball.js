@@ -26,15 +26,21 @@ class Ball {
     ) {
       this.connection = true;
     }
-    if (this.connection && !this.game.goal.hit) {
+
+    if (this.connection && !this.game.goal.hit && !this.game.mousePlayer.isDraggingBall) {
       this.runLogicConnected();
-    } else if (!this.connection && !this.game.goal.hit) {
+    } else if (!this.connection && !this.game.goal.hit && !this.game.mousePlayer.isDraggingBall) {
       this.runLogicDisconnected();
+    } else if (!this.connection && !this.game.goal.hit && this.game.mousePlayer.isDraggingBall) {
+      this.runLogicMouse();
     } else {
       this.runLogicHitGoal();
     }
+
+  
   }
 
+  
   runLogicConnected() {
     this.x = this.player.x;
     this.y = this.player.y - this.player.radius - this.radius;
@@ -94,8 +100,22 @@ class Ball {
     this.y = this.game.goal.y;
   }
 
+  runLogicMouse(){
+      
+      this.x = this.game.mousePlayer.x;
+      this.y = this.game.mousePlayer.y;
+      for (let obstacle of this.game.obstacles) {
+        if (obstacle.checkCollision(this)) {
+          this.loseConnection();
+        }
+      }
+    
+  }
+
   loseConnection() {
-    if (this.connection === true) {
+    
+    if (this.connection || this.game.mousePlayer.isDraggingBall) {
+      this.game.mousePlayer.isDraggingBall = false;
       this.connection = false;
       const intersectingObstacle = this.whichObstale();
       if (intersectingObstacle.x < this.x) {
