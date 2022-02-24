@@ -9,6 +9,7 @@ class Game {
     this.canvas = canvasElement;
     this.context = canvasElement.getContext('2d');
     this.player = new Player(this);
+    this.mousePlayer = new mousePlayer(this);
     this.ball = new Ball(this);
     this.goal = new Goal(this);
     this.duration = 1000; //sec*10
@@ -24,6 +25,7 @@ class Game {
     this.running = true;
     this.startTime = Date.now();
     this.timer = this.duration;
+
     this.addObstacles();
     this.enableControls();
     this.displayScreen('playing');
@@ -45,9 +47,9 @@ class Game {
   addObstacles() {
     this.obstacles.push(
       new Obstacle(this, 200, 0, 200), //y value needs to be the upper end of obstacle!! (otherwise problem with collision test)
-      new Obstacle(this, 350, 100, this.canvas.height)
-      // new Obstacle(this, -250, 150, 50),
-      //new Obstacle(this, -150, 300, 50)
+      new Obstacle(this, 350, 100, this.canvas.height),
+      new Obstacle(this, 50, 250, this.canvas.height),
+      new Obstacle(this, 450, 150, 130)
     );
   }
 
@@ -61,6 +63,31 @@ class Game {
     });
     window.addEventListener('keyup', (event) => {
       this.keysDown = this.keysDown.filter((code) => code !== event.code);
+    });
+
+    this.canvas.addEventListener('mousedown', (e) => {
+      console.log('mouse down');
+      this.mousePlayer.x = e.offsetX;
+      this.mousePlayer.y = e.offsetY;
+      this.mousePlayer.isDown = true;
+    });
+    this.canvas.addEventListener('mousemove', (e) => {
+      if (this.mousePlayer.isDown === true) {
+        console.log('mouse move');
+        this.mousePlayer.drawLine(this.x, this.y, e.offsetX, e.offsetY);
+        this.mousePlayer.x = e.offsetX;
+        this.mousePlayer.y = e.offsetY;
+      }
+    });
+
+    this.canvas.addEventListener('mouseup', (e) => {
+      if (this.mousePlayer.isDown === true) {
+        console.log('mouse up');
+        this.mousePlayer.drawLine(this.x, this.y, e.offsetX, e.offsetY);
+        this.mousePlayer.x = 0;
+        this.mousePlayer.y = 0;
+        this.mousePlayer.isDown = false;
+      }
     });
   }
 
@@ -86,6 +113,7 @@ class Game {
 
   runLogic() {
     this.player.runLogic();
+    this.mousePlayer.runLogic();
     this.ball.runLogic();
     this.goal.runLogic();
 

@@ -2,8 +2,8 @@ class Goal {
   constructor(gameInstance) {
     this.game = gameInstance;
     this.radius = this.game.ball.radius + 10;
-    this.x = this.radius;
-    this.y = 50;
+    this.x = 70;
+    this.y = 70;
     this.hit = false;
   }
 
@@ -20,15 +20,15 @@ class Goal {
     this.game.context.save();
     this.game.context.fillStyle = 'black';
     this.game.context.beginPath();
-    game.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+    game.context.arc(this.x , this.y, this.radius, 0, 2 * Math.PI);
     this.game.context.closePath();
     this.game.context.fill();
-    this.game.context.fillRect(
+    /* this.game.context.fillRect(
       this.x - this.radius,
       this.y - this.radius,
       this.radius,
       this.radius * 2
-    );
+    ); */
     this.game.context.restore();
   }
 

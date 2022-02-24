@@ -99,10 +99,12 @@ class Player {
   draw() {
     this.game.context.save();
     this.game.context.fillStyle = 'blue';
+    this.game.context.strokeStyle = 'black';
     this.game.context.beginPath();
     game.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
     this.game.context.closePath();
-    this.game.context.fill();
+    this.game.context.stroke();
+    //this.game.context.fill();
     this.game.context.restore();
   }
 }
