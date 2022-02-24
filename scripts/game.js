@@ -3,6 +3,11 @@
 // for executing the logic for that game element
 // and a draw method, that is responsible for drawing
 // that element to the canvas
+const canvasElement = document.querySelector('canvas');
+
+const ballStartX = canvasElement.width - 50;
+const ballStartY = 100;
+
 
 class Game {
   constructor(canvasElement, screens) {
@@ -25,9 +30,10 @@ class Game {
     this.running = true;
     this.startTime = Date.now();
     this.timer = this.duration;
-    this.ball.x = 550;
-    this.ball.y = 200;
-
+    this.goal.hit = false;
+    this.ball.x = ballStartX;
+    this.ball.y = ballStartY;
+    
     this.addObstacles();
     this.enableControls();
     this.displayScreen('playing');
@@ -52,7 +58,10 @@ class Game {
       new Obstacle(this, 350, 100, this.canvas.height),
       new Obstacle(this, 50, 250, this.canvas.height),
       new Obstacle(this, 450, 150, 130),
-      new Obstacle(this, 150, 150, 130)
+      new Obstacle(this, 150, 150, 130),
+      new Obstacle(this, 700, 0, 200),
+      new Obstacle(this, 700, 270, 200),
+      new Obstacle(this, 790, 180, 100),
     );
   }
 

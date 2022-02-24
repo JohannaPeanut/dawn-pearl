@@ -3,7 +3,7 @@ class Obstacle {
     this.game = gameInstance;
     this.x = x;
     this.y = y;
-    this.width = 20;
+    this.width = 15;
     this.height = height;
   }
 

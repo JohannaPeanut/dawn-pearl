@@ -1,4 +1,4 @@
-const canvasElement = document.querySelector('canvas');
+
 
 const startScreenElement = document.getElementById('start-screen');
 const playingScreenElement = document.getElementById('playing-screen');
@@ -15,7 +15,6 @@ const screenElements = {
 
 const game = new Game(canvasElement, screenElements);
 
-game.start();
 
 startButton.addEventListener('click', () => {
   game.start();

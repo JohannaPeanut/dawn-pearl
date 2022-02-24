@@ -6,13 +6,14 @@ class Ball {
     this.game = gameInstance;
     this.player = this.game.player;
     this.radius = 20;
-    this.x = 400;
+    this.x = 800;
     this.y = 200; //this.game.canvas.height - this.radius - 200;
     this.speedY = 100; // pixels per second
     this.speedX = 50; // pixels per second
     this.gravity = 4000; // pixels per second squared, accelerationY
     this.accelerationX = 0; // pixels per second squared
     this.connection = false;
+  
   }
 
   runLogic() {

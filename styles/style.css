@@ -15,20 +15,27 @@ body {
 
 canvas {
   background-color: rgb(15, 0, 203);
+  border: #f7f5f5 5px solid;
+  border-radius: 1%;
+  box-shadow: 0 14px 14px 0 #f7f5f5, 0 10px 10px 0 #a39d9d;
 }
 
 button {
-  color: yellow;
-  border: yellow 1px solid;
+  color: white;
+  border: white 1px solid;
   background-color: black;
   padding: 15px;
   font-family: inherit;
-  font-size: inherit
+  font-size: inherit;
+  border-radius: 10%;
 }
 
+button:hover {
+  box-shadow: 0 14px 18px 0 #f7f5f5, 0 10px 50px 0 #a39d9d;
+  }
+
 p{
-  color: yellow;
-  background-color: black;
+  color: white;
   padding: 15px;
   font-family: inherit;
   font-size: inherit
