@@ -1,7 +1,7 @@
 class Goal {
   constructor(gameInstance) {
     this.game = gameInstance;
-    this.radius = this.game.ball.radius + 10;
+    this.radius = 20 + 10;
     this.x = 70;
     this.y = 70;
     this.hit = false;
@@ -29,6 +29,8 @@ class Goal {
 
   checkCollisionWithBall() {
     //
+
+    
     return (
       // is right edge of element in front of left edge of enemy
       this.game.ball.x + this.game.ball.radius > this.x &&

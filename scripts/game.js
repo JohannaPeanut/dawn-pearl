@@ -15,7 +15,8 @@ class Game {
     this.level = level;
     this.player = new Player(this);
     this.mousePlayer = new mousePlayer(this);
-    this.ball = new Ball(this);
+    //this.balls = [];
+    this.ball = new Ball(this, 800, 200);
     this.goal = new Goal(this);
     this.duration = 500; //sec*10
     this.startTime = 0;
@@ -31,14 +32,40 @@ class Game {
     this.running = true;
     this.startTime = Date.now();
     this.timer = this.duration;
+    //this.createBalls();
     this.goal.hit = false;
-    this.ball.x = ballStartX;
-    this.ball.y = ballStartY;
+    //this.ball.x = ballStartX;
+    //this.ball.y = ballStartY;
 
     this.addObstacles();
     this.enableControls();
     this.displayScreen('playing');
     this.loop();
+  }
+
+  createBalls() {
+    const constructBalls = (ballArray) => {
+      for (let ball of ballArray) {
+        this.balls.push(new Ball(this, ball.x, ball.y));
+      }
+    };
+
+    switch (this.level) {
+      case 1:
+        constructBalls(level1.balls);
+        break;
+      case 2:
+        constructBalls(level2.balls);
+        break;
+      case 3:
+        constructBalls(level3.balls);
+        break;
+      case 4:
+        constructBalls(level4.balls);
+        break;
+      default:
+        break;
+    }
   }
 
   displayScreen(name) {
@@ -54,14 +81,13 @@ class Game {
   }
 
   addObstacles() {
-
     const buildObstacles = (obstacleArray) => {
       for (let obstacle of obstacleArray) {
         this.obstacles.push(
           new Obstacle(this, obstacle.x, obstacle.y, obstacle.height)
         );
-    }
-  }
+      }
+    };
 
     switch (this.level) {
       case 1:
@@ -70,10 +96,10 @@ class Game {
       case 2:
         buildObstacles(level2.obstacles);
         break;
-        case 3:
+      case 3:
         buildObstacles(level3.obstacles);
         break;
-        case 4:
+      case 4:
         buildObstacles(level4.obstacles);
         break;
       default:

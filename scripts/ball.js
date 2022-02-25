@@ -2,12 +2,12 @@ const clamp = (value, min, max) => Math.max(Math.min(value, max), min);
 
 const fps = 60;
 class Ball {
-  constructor(gameInstance) {
+  constructor(gameInstance, x, y) {
     this.game = gameInstance;
     this.player = this.game.player;
     this.radius = 20;
-    this.x = 800;
-    this.y = 200; //this.game.canvas.height - this.radius - 200;
+    this.x = x;
+    this.y = y; //this.game.canvas.height - this.radius - 200;
     this.speedY = 100; // pixels per second
     this.speedX = 50; // pixels per second
     this.gravity = 4000; // pixels per second squared, accelerationY
