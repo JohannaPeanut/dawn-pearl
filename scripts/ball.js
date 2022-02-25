@@ -133,7 +133,8 @@ class Ball {
       this.speedX = deltaX * 10;
       this.speedY = deltaY * 10;
 
-      this.y += this.speedY / fps;
+      this.y += this.speedY / fps ;
+      this.y -= this.radius/5;
       this.x += this.speedX / fps;
 
       for (let obstacle of this.game.obstacles) {

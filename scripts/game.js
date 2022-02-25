@@ -54,18 +54,35 @@ class Game {
   }
 
   addObstacles() {
-    this.obstacles.push(
-      new Obstacle(this, 200, 0, 200), //y value needs to be the upper end of obstacle!! (otherwise problem with collision test)
-      new Obstacle(this, 350, 100, this.canvas.height),
-      new Obstacle(this, 50, 250, this.canvas.height),
-      new Obstacle(this, 450, 150, 130),
-      new Obstacle(this, 150, 150, 130),
-      new Obstacle(this, 700, 0, 200),
-      new Obstacle(this, 700, 270, 200),
-      //new Obstacle(this, 790, 180, 100),
-      new Obstacle(this, 790, 180, 10),
-      new Obstacle(this, 820, 180, 10)
-    );
+
+    const buildObstacles = (obstacleArray) => {
+      for (let obstacle of obstacleArray) {
+        this.obstacles.push(
+          new Obstacle(this, obstacle.x, obstacle.y, obstacle.height)
+        );
+    }
+  }
+
+    switch (this.level) {
+      case 1:
+        buildObstacles(level1.obstacles);
+        break;
+      case 2:
+        buildObstacles(level2.obstacles);
+        break;
+        case 3:
+        buildObstacles(level3.obstacles);
+        break;
+        case 4:
+        buildObstacles(level4.obstacles);
+        break;
+      default:
+        break;
+    }
+
+    //, //y value needs to be the upper end of obstacle!! (otherwise problem with collision test)
+
+    // );
   }
 
   enableControls() {
@@ -109,15 +126,15 @@ class Game {
   }
 
   runTimer() {
-    if(this.running) {
-    const timePassed = Math.floor((Date.now() - this.startTime) / 100);
-    if (this.timer > 0) {
-      this.timer = this.duration - timePassed;
-    } else {
-      this.timer = 0;
+    if (this.running) {
+      const timePassed = Math.floor((Date.now() - this.startTime) / 100);
+      if (this.timer > 0) {
+        this.timer = this.duration - timePassed;
+      } else {
+        this.timer = 0;
+      }
     }
-  }
-  
+
     //this.context.font = '32px sans-serif';
     //this.context.fillText(this.timer, 150, 450);
   }
@@ -144,11 +161,10 @@ class Game {
       this.ball.runLogic();
       this.draw();
       this.nextLevel();
-    } 
+    }
   }
 
   drawBackground() {
-    
     this.context.save();
     const gradient = this.context.createLinearGradient(
       0,
@@ -172,7 +188,6 @@ class Game {
     this.context.fillStyle = `rgba(0,0,0, ${this.timer / this.duration - 0.2})`;
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.restore();
-    
   }
 
   draw() {
@@ -195,8 +210,7 @@ class Game {
 
   nextLevel() {
     this.running = false;
-    levelNo ++;
+    levelNo++;
     window.setTimeout(() => startNextLevel(levelNo), 3000);
-    
   }
 }

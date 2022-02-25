@@ -16,7 +16,20 @@ let levelNo = 1;
 
 const game = new Game(canvasElement, screenElements, levelNo);
 
+
+startButton.addEventListener('click', () => {
+  game.start();
+});
+
+tryAgainButton.addEventListener('click', () => {
+  game.start();
+});
+
+
 function startNextLevel(levelNo) {
+
+//let levelName = `gameLevel${levelNo}`
+
   switch (levelNo) {
     case 2:
       const gameLevel2 = new Game(canvasElement, screenElements, levelNo);
@@ -35,11 +48,3 @@ function startNextLevel(levelNo) {
       wonScreenElement.style.display = '';
   }
 }
-
-startButton.addEventListener('click', () => {
-  game.start();
-});
-
-tryAgainButton.addEventListener('click', () => {
-  game.start();
-});
