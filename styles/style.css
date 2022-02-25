@@ -5,44 +5,70 @@ body {
 
 body {
   margin: 0;
-  background-color: white;
+  background-color: #575151;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'Times New Roman', Times, serif;
-  font-size: 24px;
+  font-size: 16px;
+  
+
 }
 
 canvas {
   background-color: rgb(15, 0, 203);
   border: #f7f5f5 5px solid;
   border-radius: 1%;
-  box-shadow: 0 14px 14px 0 #f7f5f5, 0 10px 10px 0 #a39d9d;
+  box-shadow: 0 1px 14px 0 #f7f5f5, 0 10px 10px 0 #a39d9d;
 }
 
 button {
-  color: white;
+  /* color: white;
   border: white 1px solid;
-  background-color: black;
+  background-color: #575151;
   padding: 15px;
   font-family: inherit;
   font-size: inherit;
-  border-radius: 10%;
+  border-radius: 10%; */
+  
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1rem;
+  padding: 1.5rem 3.5rem;
+  background-color: #fafafa;
+  background-image: linear-gradient(
+    #ddd,
+    #fafafa,
+    #fff 50%,
+    #e2e2e2 60%,
+    #fff 95%
+  );
+  color: #333;
+  border-radius: 2rem;
+  border: 1px solid #bbb;
+  border-top-color: #ccc;
+  border-bottom-color: #999;
+  border-right-color: #aaa;
+  box-shadow: 0 4px 4px rgba(255, 255, 255, 0.6) inset,
+    0px -9px 10px -4px rgba(255, 255, 255, 1) inset,
+    0 -20px 1px -6px rgba(0, 0, 0, 0.125) inset;
+  text-shadow: 0 1px 2px #fff, 0 0 3px #fff, 0 0 10px #fff;
+  outline: none ;
 }
 
 button:hover {
-  box-shadow: 0 14px 18px 0 #383737, 0 10px 50px 0 #131313;
+  box-shadow: 0 14px 14px 0 #f7f5f5, 0 10px 10px 0 #a39d9d;
   }
 
 p{
-  color: blue;
+  color: white;
   padding: 15px;
   font-family: inherit;
   font-size: inherit
 }
 
 .screen {
-  background-color: white;
+  background-color: #575151;
   width: 650px;
   height: 450px;
   display: flex;

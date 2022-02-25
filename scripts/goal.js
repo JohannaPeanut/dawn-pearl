@@ -18,7 +18,8 @@ class Goal {
 
   draw() {
     this.game.context.save();
-    this.game.context.strokeStyle = 'black';
+    this.game.context.strokeStyle = 'white';
+    this.game.context.lineWidth = 3;
     this.game.context.beginPath();
     game.context.arc(this.x , this.y, this.radius, 0, 2 * Math.PI);
     this.game.context.closePath();

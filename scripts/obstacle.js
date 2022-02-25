@@ -9,9 +9,15 @@ class Obstacle {
 
   draw() {
     this.game.context.save();
-    this.game.context.fillStyle = 'white';
-    this.game.context.strokeStyle = "black";
-    this.game.context.fillRect(this.x, this.y, this.width, this.height);
+    this.game.context.strokeStyle = 'white';
+    this.game.context.lineWidth = 3;
+    //this.game.context.fillRect(this.x, this.y, this.width, this.height);
+    this.game.context.beginPath();
+    this.game.context.lineTo(this.x, this.y);
+    this.game.context.lineTo(this.x + this.width, this.y);
+    this.game.context.lineTo(this.x + this.width, this.y + this.height);
+    this.game.context.lineTo(this.x, this.y+ this.height);
+    this.game.context.closePath();
     this.game.context.stroke();
     this.game.context.restore();
   }
