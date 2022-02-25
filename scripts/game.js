@@ -8,11 +8,11 @@ const canvasElement = document.querySelector('canvas');
 const ballStartX = canvasElement.width - 50;
 const ballStartY = 100;
 
-
 class Game {
-  constructor(canvasElement, screens) {
+  constructor(canvasElement, screens, level) {
     this.canvas = canvasElement;
     this.context = canvasElement.getContext('2d');
+    this.level = level;
     this.player = new Player(this);
     this.mousePlayer = new mousePlayer(this);
     this.ball = new Ball(this);
@@ -27,13 +27,14 @@ class Game {
   }
 
   start() {
+    console.log(`level ${this.level} starts`);
     this.running = true;
     this.startTime = Date.now();
     this.timer = this.duration;
     this.goal.hit = false;
     this.ball.x = ballStartX;
     this.ball.y = ballStartY;
-    
+
     this.addObstacles();
     this.enableControls();
     this.displayScreen('playing');
@@ -61,39 +62,41 @@ class Game {
       new Obstacle(this, 150, 150, 130),
       new Obstacle(this, 700, 0, 200),
       new Obstacle(this, 700, 270, 200),
-      new Obstacle(this, 790, 180, 100),
+      //new Obstacle(this, 790, 180, 100),
+      new Obstacle(this, 790, 180, 10),
+      new Obstacle(this, 820, 180, 10)
     );
   }
 
   enableControls() {
-    const keysToPreventDefaultAction = ['ArrowUp', 'ArrowRight', 'ArrowLeft'];
-    window.addEventListener('keydown', (event) => {
-      if (keysToPreventDefaultAction.includes(event.code)) {
-        event.preventDefault();
-      }
-      this.keysDown.push(event.code);
-    });
-    window.addEventListener('keyup', (event) => {
-      this.keysDown = this.keysDown.filter((code) => code !== event.code);
-    });
+    if (this.running) {
+      const keysToPreventDefaultAction = ['ArrowUp', 'ArrowRight', 'ArrowLeft'];
+      window.addEventListener('keydown', (event) => {
+        if (keysToPreventDefaultAction.includes(event.code)) {
+          event.preventDefault();
+        }
+        this.keysDown.push(event.code);
+      });
+      window.addEventListener('keyup', (event) => {
+        this.keysDown = this.keysDown.filter((code) => code !== event.code);
+      });
 
-    this.canvas.addEventListener('mousedown', (e) => {
-      this.mousePlayer.isDown = true;
-    });
-    this.canvas.addEventListener('mousemove', (e) => {
+      window.addEventListener('mousedown', (e) => {
+        this.mousePlayer.isDown = true;
+      });
+
+      window.addEventListener('mousemove', (e) => {
         this.mousePlayer.x = e.offsetX;
         this.mousePlayer.y = e.offsetY;
-      if (this.mousePlayer.isDown === true) {
+      });
 
-      }
-    });
-
-    this.canvas.addEventListener('mouseup', (e) => {
-      if (this.mousePlayer.isDown === true) {
-        this.mousePlayer.isDown = false;
-        this.mousePlayer.isDraggingBall = false;
-      }
-    });
+      window.addEventListener('mouseup', (e) => {
+        if (this.mousePlayer.isDown === true) {
+          this.mousePlayer.isDown = false;
+          this.mousePlayer.isDraggingBall = false;
+        }
+      });
+    }
   }
 
   loop() {
@@ -106,12 +109,15 @@ class Game {
   }
 
   runTimer() {
+    if(this.running) {
     const timePassed = Math.floor((Date.now() - this.startTime) / 100);
     if (this.timer > 0) {
       this.timer = this.duration - timePassed;
     } else {
       this.timer = 0;
     }
+  }
+  
     //this.context.font = '32px sans-serif';
     //this.context.fillText(this.timer, 150, 450);
   }
@@ -133,9 +139,16 @@ class Game {
     if (this.timer <= 0) {
       this.lose();
     }
+
+    if (this.goal.hit) {
+      this.ball.runLogic();
+      this.draw();
+      this.nextLevel();
+    } 
   }
 
   drawBackground() {
+    
     this.context.save();
     const gradient = this.context.createLinearGradient(
       0,
@@ -159,6 +172,7 @@ class Game {
     this.context.fillStyle = `rgba(0,0,0, ${this.timer / this.duration - 0.2})`;
     this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.context.restore();
+    
   }
 
   draw() {
@@ -177,5 +191,12 @@ class Game {
 
   clean() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
+  nextLevel() {
+    this.running = false;
+    levelNo ++;
+    window.setTimeout(() => startNextLevel(levelNo), 3000);
+    
   }
 }

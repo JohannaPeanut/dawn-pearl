@@ -11,8 +11,10 @@ class mousePlayer {
   }
 
   runLogic() {
+    this.y = clamp(this.y, this.game.ball.radius, this.game.canvas.height - this.game.ball.radius);
+    this.x = clamp(this.x, this.game.ball.radius, this.game.canvas.width - this.game.ball.radius);
     if (this.isDown) {
-      if (this.checkCollisionWithBall()) {
+      if (this.checkCollisionWithBall() && this.game.ball.y > this.game.canvas.height* 0.75) {
         if (!this.isDraggingBall) this.isDraggingBall = true;
       }
     }

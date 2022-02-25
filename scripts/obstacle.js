@@ -9,8 +9,10 @@ class Obstacle {
 
   draw() {
     this.game.context.save();
-    this.game.context.fillStyle = 'black';
+    this.game.context.fillStyle = 'white';
+    this.game.context.strokeStyle = "black";
     this.game.context.fillRect(this.x, this.y, this.width, this.height);
+    this.game.context.stroke();
     this.game.context.restore();
   }
 

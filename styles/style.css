@@ -5,7 +5,7 @@ body {
 
 body {
   margin: 0;
-  background-color: black;
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,18 +31,18 @@ button {
 }
 
 button:hover {
-  box-shadow: 0 14px 18px 0 #f7f5f5, 0 10px 50px 0 #a39d9d;
+  box-shadow: 0 14px 18px 0 #383737, 0 10px 50px 0 #131313;
   }
 
 p{
-  color: white;
+  color: blue;
   padding: 15px;
   font-family: inherit;
   font-size: inherit
 }
 
 .screen {
-  background-color: black;
+  background-color: white;
   width: 650px;
   height: 450px;
   display: flex;

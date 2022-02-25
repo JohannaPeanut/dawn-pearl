@@ -11,8 +11,8 @@ class Goal {
 
   runLogic() {
     if (this.checkCollisionWithBall()) {
-      this.hit = true;
-      this.game.ball.connection = false;
+      
+        this.hit = true;
     }
   }
 
