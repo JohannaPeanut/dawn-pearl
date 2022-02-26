@@ -1,10 +1,27 @@
 class Obstacle {
-  constructor(gameInstance, x, y, height) {
+  constructor(gameInstance, x, y, height, move) {
     this.game = gameInstance;
     this.x = x;
     this.y = y;
     this.width = 15;
     this.height = height;
+    if (move) {
+      this.isMoving = true;
+      console.log("true")
+    } else {
+      this.isMoving = false
+      console.log("false")
+    }
+  }
+
+  runLogic() {
+    if (this.isMoving) {
+      if (this.y < this.game.canvas.height) {
+        this.y += 3;
+      } else {
+        this.y = 0 - this.height;
+      }
+    }
   }
 
   draw() {
@@ -16,7 +33,7 @@ class Obstacle {
     this.game.context.lineTo(this.x, this.y);
     this.game.context.lineTo(this.x + this.width, this.y);
     this.game.context.lineTo(this.x + this.width, this.y + this.height);
-    this.game.context.lineTo(this.x, this.y+ this.height);
+    this.game.context.lineTo(this.x, this.y + this.height);
     this.game.context.closePath();
     this.game.context.stroke();
     this.game.context.restore();

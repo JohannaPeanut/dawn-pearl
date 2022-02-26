@@ -20,7 +20,7 @@ class Game {
     this.mousePlayer = new mousePlayer(this);
     this.ball = new Ball(this, 800, 200);
     this.goal = new Goal(this);
-    this.duration = 250; //sec*10
+    this.duration = 300; //sec*10
     this.startTime = 0;
     this.timer = this.duration;
     this.screens = screens;
@@ -101,11 +101,11 @@ class Game {
     const buildObstacles = (obstacleArray) => {
       for (let obstacle of obstacleArray) {
         this.obstacles.push(
-          new Obstacle(this, obstacle.x, obstacle.y, obstacle.height)
+          new Obstacle(this, obstacle.x, obstacle.y, obstacle.height, obstacle.move)
         );
       }
     };
-    console.log(this.level);
+    
     buildObstacles(this.level.obstacles);
   }
 
@@ -170,6 +170,7 @@ class Game {
     this.goal.runLogic();
 
     for (const obstacle of this.obstacles) {
+    obstacle.runLogic();
       const obstacleAndPlayerCollision = obstacle.checkCollision(this.player);
       const enemyIsOutOfBounds = obstacle.x + obstacle.width < 0;
       if (obstacleAndPlayerCollision || enemyIsOutOfBounds) {
