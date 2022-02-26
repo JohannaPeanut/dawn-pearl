@@ -49,6 +49,3 @@ function startNextLevel(levelNo) {
       wonScreenElement.style.display = '';
   }
 }
-
-const gameLevel3 = new Game(canvasElement, screenElements, 3);
-      gameLevel3.start();
