@@ -12,7 +12,6 @@ class Ball {
     this.speedX = 50; // pixels per second
     this.gravity = 4000; // pixels per second squared, accelerationY
     this.accelerationX = 0; // pixels per second squared
-    this.connection = false;
   }
 
   runLogic() {
@@ -22,44 +21,27 @@ class Ball {
     this.y = clamp(this.y, this.radius, this.game.canvas.height - this.radius);
     this.x = clamp(this.x, this.radius, this.game.canvas.width - this.radius);
 
-    if (
-      this.checkCollision(this.player) &&
-      this.player.y > this.game.canvas.height - 1.5 * this.radius &&
-      !this.connection
-    ) {
-      this.connection = true;
-    }
+      if (this.game.goal.checkCollisionWithBall(this)) {
+        this.game.goal.hit = true;
+        this.game.goal.ballInGoal = this;
+      }
 
     if (
-      this.connection &&
-      !this.game.goal.hit &&
-      !this.game.mousePlayer.isDraggingBall
-    ) {
-      this.runLogicConnected();
-    } else if (
-      !this.connection &&
-      !this.game.goal.hit &&
-      !this.game.mousePlayer.isDraggingBall
+      this.game.goal.ballInGoal !== this &&
+      this.game.mousePlayer.draggedBall !== this
     ) {
       this.runLogicDisconnected();
     } else if (
-      !this.connection &&
-      !this.game.goal.hit &&
-      this.game.mousePlayer.isDraggingBall
+      this.game.goal.ballInGoal !== this &&
+      this.game.mousePlayer.isDraggingBall &&
+      this.game.mousePlayer.draggedBall === this
     ) {
       this.runLogicMouse();
-    } else {
+    } else if (this.game.goal.ballInGoal === this) {
       this.runLogicHitGoal();
     }
   }
 
-  runLogicConnected() {
-    this.x = this.player.x;
-    this.y = this.player.y - this.player.radius - this.radius;
-    for (let obstacle of this.game.obstacles) {
-      if (obstacle.checkCollision(this)) this.loseConnection();
-    }
-  }
 
   runLogicDisconnected() {
     this.speedY += this.gravity / fps;
@@ -81,7 +63,7 @@ class Ball {
       this.speedX = this.speedX * -0.94;
     }
     for (let obstacle of this.game.obstacles) {
-      if (obstacle.checkCollision(this)) {
+      if (this.checkCollisionWithObstacle(obstacle)) {
         const intersectingObstacle = this.whichObstale();
         if (intersectingObstacle.x < this.x) {
           //if intersecting obstacle is left from ball --> new clamp for right side of obstacle
@@ -118,7 +100,6 @@ class Ball {
   runLogicHitGoal() {
     this.x = this.game.goal.x;
     this.y = this.game.goal.y;
-    this.connection = false;
     this.game.mousePlayer.isDraggingBall = false;
   }
 
@@ -127,7 +108,8 @@ class Ball {
     let deltaX = this.game.mousePlayer.x - this.x;
 
     if (deltaX > 200 || deltaX < -200) {
-      this.game.ball.isDraggingBall = false;
+      this.game.mousePlayer.isDraggingBall = false;
+      this.game.mousePlayer.draggedBall ='';
     } else {
       this.speedX = deltaX * 10;
       this.speedY = deltaY * 10;
@@ -146,9 +128,10 @@ class Ball {
   }
 
   loseConnection() {
-    if (this.connection || this.game.mousePlayer.isDraggingBall) {
+    if (this.game.mousePlayer.isDraggingBall) {
       this.game.mousePlayer.isDraggingBall = false;
-      this.connection = false;
+      this.game.mousePlayer.draggedBall = '';
+      
       const intersectingObstacle = this.whichObstale();
       if (intersectingObstacle.x < this.x) {
         this.x += 1.2 * this.radius + 2; // if obstacle is left from ball --> ball falls to the right
@@ -166,6 +149,21 @@ class Ball {
     this.game.context.closePath();
     this.game.context.fill();
     this.game.context.restore();
+  }
+
+  checkCollisionWithObstacle(element) {
+    // We'll use this to check for intersections between player and obstacle
+    return (
+      //problem: certain obstacles are not checked at the top end
+      // is right edge of element in front of left edge of enemy
+      this.x + this.radius > element.x &&
+      // is left edge of element before of right edge of enemy
+      this.x - this.radius < element.x + element.width &&
+      // is bottom edge of element below top edge of enemy
+      this.y + this.radius > element.y &&
+      // is top edge of element above bottom edge of enemy
+      this.y - this.radius < element.y + element.height
+    );
   }
 
   checkCollision(element) {

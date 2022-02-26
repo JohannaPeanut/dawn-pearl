@@ -16,9 +16,9 @@ class Game {
   constructor(canvasElement, screens, level) {
     this.canvas = canvasElement;
     this.context = canvasElement.getContext('2d');
-    this.player = new Player(this);
+
     this.mousePlayer = new mousePlayer(this);
-    this.ball = new Ball(this, 800, 200);
+    this.balls = [];
     this.goal = new Goal(this);
     this.duration = 300; //sec*10
     this.startTime = 0;
@@ -49,10 +49,8 @@ class Game {
     this.running = true;
     this.startTime = Date.now();
     this.timer = this.duration;
-    //this.createBalls();
+    this.createBalls();
     this.goal.hit = false;
-    this.ball.x = this.level.balls[0].x;
-    this.ball.y = this.level.balls[0].y;
 
     this.addObstacles();
     this.enableControls();
@@ -61,28 +59,13 @@ class Game {
   }
 
   createBalls() {
+    this.balls =[];
     const constructBalls = (ballArray) => {
       for (let ball of ballArray) {
         this.balls.push(new Ball(this, ball.x, ball.y));
       }
     };
-
-    switch (this.level) {
-      case 1:
-        constructBalls(level1.balls);
-        break;
-      case 2:
-        constructBalls(level2.balls);
-        break;
-      case 3:
-        constructBalls(level3.balls);
-        break;
-      case 4:
-        constructBalls(level4.balls);
-        break;
-      default:
-        break;
-    }
+    constructBalls(this.level.balls);
   }
 
   displayScreen(name) {
@@ -101,11 +84,17 @@ class Game {
     const buildObstacles = (obstacleArray) => {
       for (let obstacle of obstacleArray) {
         this.obstacles.push(
-          new Obstacle(this, obstacle.x, obstacle.y, obstacle.height, obstacle.move)
+          new Obstacle(
+            this,
+            obstacle.x,
+            obstacle.y,
+            obstacle.height,
+            obstacle.move
+          )
         );
       }
     };
-    
+
     buildObstacles(this.level.obstacles);
   }
 
@@ -164,16 +153,18 @@ class Game {
   }
 
   runLogic() {
-    this.player.runLogic();
     this.mousePlayer.runLogic();
-    this.ball.runLogic();
+    for (let ball of this.balls) {
+      //console.log(ball);
+      ball.runLogic();
+    } 
     this.goal.runLogic();
 
     for (const obstacle of this.obstacles) {
-    obstacle.runLogic();
-      const obstacleAndPlayerCollision = obstacle.checkCollision(this.player);
+      obstacle.runLogic();
+      
       const enemyIsOutOfBounds = obstacle.x + obstacle.width < 0;
-      if (obstacleAndPlayerCollision || enemyIsOutOfBounds) {
+      if (enemyIsOutOfBounds) {
         console.log('collision!');
       }
     }
@@ -183,7 +174,9 @@ class Game {
     }
 
     if (this.goal.hit) {
-      this.ball.runLogic();
+      for (let ball of this.balls) {
+        ball.runLogic();
+      }
       this.draw();
       this.nextLevel();
     }
@@ -219,9 +212,10 @@ class Game {
     this.clean();
     this.drawBackground();
     this.goal.draw();
-    this.player.draw();
     this.mousePlayer.draw();
-    this.ball.draw();
+    for (let ball of this.balls) {
+      ball.draw();
+    }
 
     for (const obstacle of this.obstacles) {
       obstacle.draw();

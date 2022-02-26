@@ -6,28 +6,50 @@ class mousePlayer {
     this.isDown = false;
     this.isDraggingBall = false;
   }
-  draw() {
-    
-  }
+  draw() {}
 
   runLogic() {
-    this.y = clamp(this.y, this.game.ball.radius, this.game.canvas.height - this.game.ball.radius);
-    this.x = clamp(this.x, this.game.ball.radius, this.game.canvas.width - this.game.ball.radius);
+    
+    //problem: weird ball behavior when mouse is clickd and out of canvas
     if (this.isDown) {
-      if (this.checkCollisionWithBall() && this.game.ball.y > this.game.canvas.height* 0.75) {
-        if (!this.isDraggingBall) this.isDraggingBall = true;
+      this.y = clamp(this.y, 0, this.game.canvas.height);
+    this.x = clamp(this.x,0, this.game.canvas.width);
+      for (let ball of this.game.balls) {
+       
+        if (this.checkCollisionWithBall(ball)) {
+          if (!this.isDraggingBall) {
+            console.log('collision');
+            this.isDraggingBall = true;
+            this.draggedBall = ball;
+          }
+        }
       }
+    } else {
+      this.isDraggingBall = false;
+      this.draggedBall = '';
     }
   }
 
-  checkCollisionWithBall() {
+  checkCollisionWithBall(element) {
     // check if mouse is clicked inside the radius of the ball
     return (
-      this.game.ball.x + this.game.ball.radius > this.x &&
-      this.game.ball.x - this.game.ball.radius < this.x &&
-      this.game.ball.y + this.game.ball.radius > this.y &&
-      this.game.ball.y - this.game.ball.radius < this.y
+      element.x + element.radius > this.x &&
+      element.x - element.radius < this.x &&
+      element.y + element.radius > this.y &&
+      element.y - element.radius < this.y
     );
   }
-
 }
+/* checkCollision(element) {
+  // check for intersections between player and ball
+  return (
+    // is right edge of element in front of left edge of ball
+    element.x + element.radius > this.x - this.radius &&
+    // is left edge of element before of right edge of ball
+    element.x - element.radius < this.x + this.radius &&
+    // is bottom edge of element below top edge of ball
+    element.y + element.radius > this.y - this.radius &&
+    // is top edge of element above bottom edge of ball
+    element.y - element.radius < this.y + this.radius
+  );
+} */

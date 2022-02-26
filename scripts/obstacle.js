@@ -7,10 +7,8 @@ class Obstacle {
     this.height = height;
     if (move) {
       this.isMoving = true;
-      console.log("true")
     } else {
-      this.isMoving = false
-      console.log("false")
+      this.isMoving = false;
     }
   }
 
