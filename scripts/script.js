@@ -22,6 +22,7 @@ startButton.addEventListener('click', () => {
 });
 
 tryAgainButton.addEventListener('click', () => {
+  levelNo = 1;
   game.start();
 });
 
@@ -48,3 +49,4 @@ function startNextLevel(levelNo) {
       wonScreenElement.style.display = '';
   }
 }
+

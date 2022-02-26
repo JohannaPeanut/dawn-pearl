@@ -12,30 +12,44 @@ class Game {
   constructor(canvasElement, screens, level) {
     this.canvas = canvasElement;
     this.context = canvasElement.getContext('2d');
-    this.level = level;
     this.player = new Player(this);
     this.mousePlayer = new mousePlayer(this);
-    //this.balls = [];
     this.ball = new Ball(this, 800, 200);
     this.goal = new Goal(this);
-    this.duration = 500; //sec*10
+    this.duration = 100; //sec*10
     this.startTime = 0;
     this.timer = this.duration;
     this.screens = screens;
     this.running = false;
     this.obstacles = [];
     this.keysDown = [];
+    switch (level) {
+      case 1:
+        this.level = level1;
+        break;
+      case 2:
+        this.level = level2;
+        break;
+      case 3:
+        this.level = level3;
+        break;
+      case 4:
+        this.level = level4;
+        break;
+      default:
+        break;
+    }
   }
 
   start() {
-    console.log(`level ${this.level} starts`);
+    
     this.running = true;
     this.startTime = Date.now();
     this.timer = this.duration;
     //this.createBalls();
     this.goal.hit = false;
-    //this.ball.x = ballStartX;
-    //this.ball.y = ballStartY;
+    this.ball.x = this.level.balls[0].x;
+    this.ball.y = this.level.balls[0].y;
 
     this.addObstacles();
     this.enableControls();
@@ -88,27 +102,8 @@ class Game {
         );
       }
     };
-
-    switch (this.level) {
-      case 1:
-        buildObstacles(level1.obstacles);
-        break;
-      case 2:
-        buildObstacles(level2.obstacles);
-        break;
-      case 3:
-        buildObstacles(level3.obstacles);
-        break;
-      case 4:
-        buildObstacles(level4.obstacles);
-        break;
-      default:
-        break;
-    }
-
-    //, //y value needs to be the upper end of obstacle!! (otherwise problem with collision test)
-
-    // );
+console.log(this.level)
+    buildObstacles(this.level.obstacles);
   }
 
   enableControls() {
