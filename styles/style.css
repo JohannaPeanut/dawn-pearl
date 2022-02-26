@@ -9,8 +9,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 16px;
+  font-family: 'Barlow';
+  font-size:32px;
   
 
 }
@@ -62,9 +62,10 @@ button:hover {
 
 p{
   color: white;
+  text-shadow: 4px 4px 10px #f7f5f5;
   padding: 15px;
   font-family: inherit;
-  font-size: inherit
+  font-size: 2em
 }
 
 .screen {

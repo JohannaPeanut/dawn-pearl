@@ -8,6 +8,10 @@ const canvasElement = document.querySelector('canvas');
 const ballStartX = canvasElement.width - 50;
 const ballStartY = 100;
 
+const klonkSound = new Audio(
+  'sounds/150101__peter-lustig__topf-03-massiv-klein-trocken.wav'
+);
+
 class Game {
   constructor(canvasElement, screens, level) {
     this.canvas = canvasElement;
@@ -16,7 +20,7 @@ class Game {
     this.mousePlayer = new mousePlayer(this);
     this.ball = new Ball(this, 800, 200);
     this.goal = new Goal(this);
-    this.duration = 200; //sec*10
+    this.duration = 250; //sec*10
     this.startTime = 0;
     this.timer = this.duration;
     this.screens = screens;

@@ -116,11 +116,10 @@ class Ball {
   }
 
   runLogicHitGoal() {
-    
-      this.x = this.game.goal.x;
-      this.y = this.game.goal.y;
-      this.connection = false;
-      this.game.mousePlayer.isDraggingBall = false;
+    this.x = this.game.goal.x;
+    this.y = this.game.goal.y;
+    this.connection = false;
+    this.game.mousePlayer.isDraggingBall = false;
   }
 
   runLogicMouse() {
@@ -133,13 +132,14 @@ class Ball {
       this.speedX = deltaX * 10;
       this.speedY = deltaY * 10;
 
-      this.y += this.speedY / fps ;
-      this.y -= this.radius/5;
+      this.y += this.speedY / fps;
+      this.y -= this.radius / 5;
       this.x += this.speedX / fps;
 
       for (let obstacle of this.game.obstacles) {
         if (obstacle.checkCollision(this)) {
           this.loseConnection();
+          // klonkSound.play();
         }
       }
     }
