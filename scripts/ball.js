@@ -151,9 +151,9 @@ class Ball {
       this.connection = false;
       const intersectingObstacle = this.whichObstale();
       if (intersectingObstacle.x < this.x) {
-        this.x += 2 * this.radius + 2; // if obstacle is left from ball --> ball falls to the right
+        this.x += 1.2 * this.radius + 2; // if obstacle is left from ball --> ball falls to the right
       } else {
-        this.x -= 2 * this.radius + 2; // if obstacle is right from ball --> ball falls to the left
+        this.x -= 1.2 * this.radius + 2; // if obstacle is right from ball --> ball falls to the left
       }
     }
   }

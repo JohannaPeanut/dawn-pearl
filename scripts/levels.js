@@ -38,15 +38,19 @@ const level2 = new Level(
 
 const level3 = new Level(
   [
+    { x: 440, y: 0, height: 388 },
+    { x: 580, y: 0, height: 388 },
+    { x: 600, y: 0, height: 388 },
+    { x: 780, y: 0, height: 388 },
     { x: 200, y: 0, height: 200 },
     { x: 350, y: 100, height: 500 },
-    { x: 50, y: 250, height: 500 },
-    { x: 450, y: 150, height: 130 },
+    { x: 850, y: 250, height: 500 },
+    { x: 50, y: 150, height: 130 },
     { x: 150, y: 150, height: 130 },
     { x: 700, y: 0, height: 200 },
     { x: 700, y: 270, height: 200 }
   ],
-  [{ x: 800, y: 50 }]
+  [{ x: 950, y: 50 }]
 );
 
 const level4 = new Level(

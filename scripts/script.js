@@ -49,4 +49,3 @@ function startNextLevel(levelNo) {
       wonScreenElement.style.display = '';
   }
 }
-
