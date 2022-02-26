@@ -16,7 +16,7 @@ class Game {
     this.mousePlayer = new mousePlayer(this);
     this.ball = new Ball(this, 800, 200);
     this.goal = new Goal(this);
-    this.duration = 100; //sec*10
+    this.duration = 200; //sec*10
     this.startTime = 0;
     this.timer = this.duration;
     this.screens = screens;
@@ -42,7 +42,6 @@ class Game {
   }
 
   start() {
-    
     this.running = true;
     this.startTime = Date.now();
     this.timer = this.duration;
@@ -102,7 +101,7 @@ class Game {
         );
       }
     };
-console.log(this.level)
+    console.log(this.level);
     buildObstacles(this.level.obstacles);
   }
 
