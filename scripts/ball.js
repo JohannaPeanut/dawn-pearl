@@ -10,8 +10,8 @@ class Ball {
     this.x = x;
     this.y = y; //this.game.canvas.height - this.radius - 200;
     this.speedY = 100; // pixels per second
-    this.speedX = 50; // pixels per second
-    this.gravity = 4000; // pixels per second squared, accelerationY
+    this.speedX = 80; // pixels per second
+    this.gravity = 2000; // pixels per second squared, accelerationY
     this.accelerationX = 0; // pixels per second squared
     this.hitGoal = '';
   }
@@ -101,13 +101,7 @@ class Ball {
         } */
       }
     }
-    for (let ball of this.game.balls) {
-      if (ball !== this && ball.checkCollision(this)) {
-        this.hitOtherBall();
-        // klonkSound.play();
-      }
     }
-  }
 
   runLogicHitGoal() {
     this.x = this.hitGoal.x;
@@ -138,37 +132,6 @@ class Ball {
     }
   }
 
-  hitOtherBall() {
-    const obj1 = this.game.balls[0]; //problem with referencing / like this it only works with 2 balls
-    const obj2 = this.game.balls[1];
-    let vCollision = { x: obj2.x - obj1.x, y: obj2.y - obj1.y };
-    let distance = Math.sqrt(
-      (obj2.x - obj1.x) * (obj2.x - obj1.x) +
-        (obj2.y - obj1.y) * (obj2.y - obj1.y)
-    );
-    let vCollisionNorm = {
-      x: vCollision.x / distance,
-      y: vCollision.y / distance
-    };
-    let vRelativeVelocity = {
-      x: obj1.speedX - obj2.speedX,
-      y: obj1.speedY - obj2.speedY
-    };
-    let speed =
-      vRelativeVelocity.x * vCollisionNorm.x +
-      vRelativeVelocity.y * vCollisionNorm.y;
-    if (speed < 0) {
-      obj1.x = obj1.x;
-      obj1.y = obj1.y;
-      obj2.x = obj2.x;
-      obj2.y = obj2.y;
-    } else {
-      obj1.speedX -= speed * vCollisionNorm.x;
-      obj1.speedY -= speed * vCollisionNorm.y;
-      obj2.speedX += speed * vCollisionNorm.x;
-      obj2.speedY += speed * vCollisionNorm.y;
-    }
-  }
 
   loseConnection() {
     if (this.game.mousePlayer.isDraggingBall) {

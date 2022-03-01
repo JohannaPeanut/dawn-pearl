@@ -40,6 +40,9 @@ class Game {
       case 4:
         this.level = level4;
         break;
+      case 5:
+        this.level = level5;
+        break;
       default:
         break;
     }
@@ -159,14 +162,53 @@ class Game {
         this.timer = 0;
       }
     }
-
-    //this.context.font = '32px sans-serif';
-    //this.context.fillText(this.timer, 150, 450);
   }
 
-  hitOtherBall() {
-    const obj1 = this;
-    const obj2 = this.whichBall();
+  runLogic() {
+    this.mousePlayer.runLogic();
+    for (let ball of this.balls) {
+      //console.log(ball);
+      ball.runLogic();
+    }
+
+    for (const obstacle of this.obstacles) {
+      obstacle.runLogic();
+    }
+
+    for (let j = 0; j < this.balls.length; j++) {
+      for (let i = 0; i < this.balls.length; i++) {
+        if (
+          this.balls[j] !== this.balls[i] &&
+          this.balls[j].checkCollision(this.balls[i])
+        ) {
+          this.ballsHittingEachOther(i, j);
+          // klonkSound.play();
+          //break;
+        }
+      }
+    }
+    if (this.timer <= 0) this.lose();
+
+    const allGoalsHit = () => {
+      let solution = 0;
+      for (let goal of this.goals) {
+        if (goal.hit === true) solution += 1;
+      }
+      return solution === this.goals.length;
+    };
+
+    if (allGoalsHit()) {
+      for (let ball of this.balls) {
+        ball.runLogic();
+      }
+      this.draw();
+      this.nextLevel();
+    }
+  }
+
+  ballsHittingEachOther(i, j) {
+    const obj1 = this.balls[i]; //problem with referencing / like this it only works with 2 balls
+    const obj2 = this.balls[j];
     let vCollision = { x: obj2.x - obj1.x, y: obj2.y - obj1.y };
     let distance = Math.sqrt(
       (obj2.x - obj1.x) * (obj2.x - obj1.x) +
@@ -188,47 +230,11 @@ class Game {
       obj1.y = obj1.y;
       obj2.x = obj2.x;
       obj2.y = obj2.y;
-    }
-    obj1.speedX -= speed * vCollisionNorm.x;
-    obj1.speedY -= speed * vCollisionNorm.y;
-    obj2.speedX += speed * vCollisionNorm.x;
-    obj2.speedY += speed * vCollisionNorm.y;
-  }
-
-  runLogic() {
-    this.mousePlayer.runLogic();
-    for (let ball of this.balls) {
-      //console.log(ball);
-      ball.runLogic();
-    }
-
-    for (const obstacle of this.obstacles) {
-      obstacle.runLogic();
-
-      const enemyIsOutOfBounds = obstacle.x + obstacle.width < 0;
-      if (enemyIsOutOfBounds) {
-        console.log('collision!');
-      }
-    }
-
-    if (this.timer <= 0) {
-      this.lose();
-    }
-
-    const allGoalsHit = () => {
-      let solution = 0;
-      for (let goal of this.goals) {
-        if (goal.hit === true) solution += 1;
-      }
-      return solution === this.goals.length;
-    };
-
-    if (allGoalsHit()) {
-      for (let ball of this.balls) {
-        ball.runLogic();
-      }
-      this.draw();
-      this.nextLevel();
+    } else {
+      obj1.speedX -= speed * vCollisionNorm.x;
+      obj1.speedY -= speed * vCollisionNorm.y;
+      obj2.speedX += speed * vCollisionNorm.x;
+      obj2.speedY += speed * vCollisionNorm.y;
     }
   }
 

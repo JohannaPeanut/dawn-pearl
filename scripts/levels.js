@@ -32,16 +32,17 @@ const level2 = new Level(
 
     { x: 140, y: 0, height: 388 },
     { x: 180, y: 0, height: 388 },
-    { x: 850, y: 150, height: 130 },
+    /* { x: 850, y: 150, height: 130 },
     { x: 900, y: 150, height: 130 },
-    { x: 810, y: 150, height: 130 },
+    { x: 810, y: 150, height: 130 }, */
 
     { x: 550, y: 150, height: 330 },
     { x: 700, y: 0, height: 200 },
     { x: 700, y: 270, height: 200 }
   ],
   [
-    { x: 350, y: 200, color: 'red' },
+    { x: 850, y: 100, color: 'red' },
+    { x: 800, y: 200, color: 'yellow' },
     { x: 1000, y: 50, color: 'blue' }
   ],
   [
@@ -86,6 +87,25 @@ const level3 = new Level(
   [{ x: 950, y: 50, color: 'yellow' }],
   [
     { x: 70, y: 70 }
+  ]
+);
+
+const level5 = new Level(
+  [],
+  [{ x: 950, y: 50, color: 'yellow' },
+    { x: 350, y: 200, color: 'red' },
+    { x: 1000, y: 50, color: 'blue' },
+    { x: 710, y: 400, color: 'red' },
+    { x: 1000, y: 300, color: 'blue' },
+    { x: 1000, y:10, color: 'white' }
+]
+  [
+    { x: 70, y: 70 },
+    { x: 70, y: 70 },
+  { x: 70, y: 70 },
+  { x: 70, y: 70 },
+    { x: 70, y: 70 },
+  { x: 70, y: 70 }
   ]
 );
 

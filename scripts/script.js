@@ -16,7 +16,6 @@ let levelNo = 1;
 
 const game = new Game(canvasElement, screenElements, levelNo);
 
-
 startButton.addEventListener('click', () => {
   game.start();
 });
@@ -26,10 +25,11 @@ tryAgainButton.addEventListener('click', () => {
   game.start();
 });
 
+/* const gameLevel2 = new Game(canvasElement, screenElements, 2);
+gameLevel2.start(); */
 
 function startNextLevel(levelNo) {
-
-//let levelName = `gameLevel${levelNo}`
+  //let levelName = `gameLevel${levelNo}`
 
   switch (levelNo) {
     case 2:
