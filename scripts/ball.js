@@ -18,13 +18,13 @@ class Ball {
     //problem wenn player mit obstacle kollidiert und gleichzeitig mit ball (diesen also aufnehmen will)
     // problem solved maybe if player cant pick up ball when it is intersecting with obstacles
     //tried avoid that buggy behavior with this.game.canvas.height - 1.5 * this.radius but then player cannot pick up ball when it is jumping....
-    this.y = clamp(this.y, this.radius, this.game.canvas.height - this.radius);
+    this.y = clamp(this.y, this.radius, this.game.canvas.height - this.radius); // problem: i can drag ball out of canvas at bottom
     this.x = clamp(this.x, this.radius, this.game.canvas.width - this.radius);
 
-      if (this.game.goal.checkCollisionWithBall(this)) {
-        this.game.goal.hit = true;
-        this.game.goal.ballInGoal = this;
-      }
+    if (this.game.goal.checkCollisionWithBall(this)) {
+      this.game.goal.hit = true;
+      this.game.goal.ballInGoal = this;
+    }
 
     if (
       this.game.goal.ballInGoal !== this &&
@@ -42,7 +42,6 @@ class Ball {
     }
   }
 
-
   runLogicDisconnected() {
     this.speedY += this.gravity / fps;
     this.speedX += this.accelerationX / fps;
@@ -50,6 +49,7 @@ class Ball {
     this.y += this.speedY / fps;
     this.x += this.speedX / fps;
 
+    //respect borders of canvas
     if (
       this.y + this.radius > this.game.canvas.height ||
       this.y - this.radius < 0
@@ -62,6 +62,7 @@ class Ball {
     ) {
       this.speedX = this.speedX * -0.94;
     }
+    //check for obstacle collisions
     for (let obstacle of this.game.obstacles) {
       if (this.checkCollisionWithObstacle(obstacle)) {
         const intersectingObstacle = this.whichObstale();
@@ -95,6 +96,12 @@ class Ball {
         } */
       }
     }
+    for (let ball of this.game.balls) {
+      if (ball !== this && ball.checkCollision(this)) {
+        this.hitOtherBall();
+        // klonkSound.play();
+      }
+    }
   }
 
   runLogicHitGoal() {
@@ -109,11 +116,11 @@ class Ball {
 
     if (deltaX > 200 || deltaX < -200) {
       this.game.mousePlayer.isDraggingBall = false;
-      this.game.mousePlayer.draggedBall ='';
+      this.game.mousePlayer.draggedBall = '';
     } else {
       this.speedX = deltaX * 10;
       this.speedY = deltaY * 10;
-
+      
       this.y += this.speedY / fps;
       this.y -= this.radius / 5;
       this.x += this.speedX / fps;
@@ -127,11 +134,43 @@ class Ball {
     }
   }
 
+  hitOtherBall() {
+    const obj1 = this.game.balls[0]; //problem with referencing / like this it only works with 2 balls
+    const obj2 = this.game.balls[1];
+    let vCollision = { x: obj2.x - obj1.x, y: obj2.y - obj1.y };
+    let distance = Math.sqrt(
+      (obj2.x - obj1.x) * (obj2.x - obj1.x) +
+        (obj2.y - obj1.y) * (obj2.y - obj1.y)
+    );
+    let vCollisionNorm = {
+      x: vCollision.x / distance,
+      y: vCollision.y / distance
+    };
+    let vRelativeVelocity = {
+      x: obj1.speedX - obj2.speedX,
+      y: obj1.speedY - obj2.speedY
+    };
+    let speed =
+      vRelativeVelocity.x * vCollisionNorm.x +
+      vRelativeVelocity.y * vCollisionNorm.y;
+    if (speed < 0) {
+      obj1.x = obj1.x;
+      obj1.y = obj1.y;
+      obj2.x = obj2.x;
+      obj2.y = obj2.y;
+    } else {
+      obj1.speedX -= speed * vCollisionNorm.x;
+      obj1.speedY -= speed * vCollisionNorm.y;
+      obj2.speedX += speed * vCollisionNorm.x;
+      obj2.speedY += speed * vCollisionNorm.y;
+    }
+  }
+
   loseConnection() {
     if (this.game.mousePlayer.isDraggingBall) {
       this.game.mousePlayer.isDraggingBall = false;
       this.game.mousePlayer.draggedBall = '';
-      
+
       const intersectingObstacle = this.whichObstale();
       if (intersectingObstacle.x < this.x) {
         this.x += 1.2 * this.radius + 2; // if obstacle is left from ball --> ball falls to the right
@@ -183,6 +222,12 @@ class Ball {
   whichObstale() {
     for (let obstacle of this.game.obstacles) {
       if (obstacle.checkCollision(this)) return obstacle; //returns intersecting obstacle instance
+    }
+  }
+
+  whichBall() {
+    for (let ball of this.game.balls) {
+      if (ball.checkCollision(this)) return ball; //returns intersecting obstacle instance
     }
   }
 }

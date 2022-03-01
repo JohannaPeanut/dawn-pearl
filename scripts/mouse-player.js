@@ -9,24 +9,24 @@ class mousePlayer {
   draw() {}
 
   runLogic() {
-    
-    //problem: weird ball behavior when mouse is clickd and out of canvas
-    if (this.isDown) {
-      this.y = clamp(this.y, 0, this.game.canvas.height);
-    this.x = clamp(this.x,0, this.game.canvas.width);
+    if (
+      !this.isDown ||
+      this.x < 0 ||
+      this.x > this.game.context.width ||
+      this.y < 0 ||
+      this.y > this.game.context.height
+    ) {
+      this.isDraggingBall = false;
+      this.draggedBall = '';
+    } else {
       for (let ball of this.game.balls) {
-       
         if (this.checkCollisionWithBall(ball)) {
           if (!this.isDraggingBall) {
-            console.log('collision');
             this.isDraggingBall = true;
             this.draggedBall = ball;
           }
         }
       }
-    } else {
-      this.isDraggingBall = false;
-      this.draggedBall = '';
     }
   }
 

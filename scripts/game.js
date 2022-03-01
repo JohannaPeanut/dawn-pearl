@@ -152,6 +152,27 @@ class Game {
     //this.context.fillText(this.timer, 150, 450);
   }
 
+  hitOtherBall(){
+    const obj1 = this;
+    const obj2 = this.whichBall();
+    let vCollision = {x: obj2.x - obj1.x, y: obj2.y - obj1.y};
+    let distance = Math.sqrt((obj2.x-obj1.x)*(obj2.x-obj1.x) + (obj2.y-obj1.y)*(obj2.y-obj1.y));
+    let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
+    let vRelativeVelocity = {x: obj1.speedX - obj2.speedX, y: obj1.speedY - obj2.speedY};
+    let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
+    if (speed < 0){
+      obj1.x = obj1.x;
+      obj1.y = obj1.y;
+      obj2.x = obj2.x;
+      obj2.y = obj2.y;
+  } 
+  obj1.speedX -= (speed * vCollisionNorm.x);
+obj1.speedY -= (speed * vCollisionNorm.y);
+obj2.speedX += (speed * vCollisionNorm.x);
+obj2.speedY += (speed * vCollisionNorm.y);
+
+  }
+
   runLogic() {
     this.mousePlayer.runLogic();
     for (let ball of this.balls) {
