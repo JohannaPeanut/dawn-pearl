@@ -1,7 +1,8 @@
 class Level {
-  constructor(obstacles, balls) {
+  constructor(obstacles, balls, goals) {
     this.obstacles = obstacles;
     this.balls = balls;
+    this.goals = goals;
   }
 }
 
@@ -15,8 +16,12 @@ const level1 = new Level(
     { x: 700, y: -2, height: 200 },
     { x: 700, y: 270, height: 200 }
   ],
-  [{ x: 800, y: 200 },
-    { x: 1000, y: 50 }]
+  [
+    { x: 1000, y: 50, color: 'blue' }
+  ],
+  [
+    { x: 70, y: 70 },
+  ]
 );
 
 const level2 = new Level(
@@ -35,7 +40,34 @@ const level2 = new Level(
     { x: 700, y: 0, height: 200 },
     { x: 700, y: 270, height: 200 }
   ],
-  [{ x: 1000, y: 50 }]
+  [
+    { x: 350, y: 200, color: 'red' },
+    { x: 1000, y: 50, color: 'blue' }
+  ],
+  [
+    { x: 70, y: 70 },
+    { x: 70, y: 140 }
+  ]
+);
+
+const level4 = new Level(
+  [
+    { x: 200, y: 0, height: 200, move: true },
+    { x: 350, y: 100, height: 500, move: true },
+    { x: 400, y: 250, height: 500, move: true },
+    { x: 450, y: 150, height: 130, move: true },
+    { x: 150, y: 150, height: 130, move: true },
+    { x: 700, y: 0, height: 200, move: true },
+    { x: 700, y: 270, height: 200, move: true }
+  ],
+  [
+    { x: 350, y: 200, color: 'red' },
+    { x: 1000, y: 50, color: 'blue' }
+  ],
+  [
+    { x: 70, y: 70 },
+    { x: 70, y: 140 }
+  ]
 );
 
 const level3 = new Level(
@@ -51,18 +83,9 @@ const level3 = new Level(
     { x: 700, y: 0, height: 200, move: true },
     { x: 700, y: 270, height: 200, move: true }
   ],
-  [{ x: 950, y: 50 }]
+  [{ x: 950, y: 50, color: 'yellow' }],
+  [
+    { x: 70, y: 70 }
+  ]
 );
 
-const level4 = new Level(
-  [
-    { x: 200, y: 0, height: 200, move: true },
-    { x: 350, y: 100, height: 500, move: true },
-    { x: 400, y: 250, height: 500, move: true },
-    { x: 450, y: 150, height: 130, move: true },
-    { x: 150, y: 150, height: 130, move :true },
-    { x: 700, y: 0, height: 200, move: true },
-    { x: 700, y: 270, height: 200, move: true }
-  ],
-  [{ x: 800, y: 50 }]
-);

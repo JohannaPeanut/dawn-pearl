@@ -19,7 +19,7 @@ class Game {
 
     this.mousePlayer = new mousePlayer(this);
     this.balls = [];
-    this.goal = new Goal(this);
+    this.goals = [];
     this.duration = 300; //sec*10
     this.startTime = 0;
     this.timer = this.duration;
@@ -50,8 +50,10 @@ class Game {
     this.startTime = Date.now();
     this.timer = this.duration;
     this.createBalls();
-    this.goal.hit = false;
-
+    this.createGoals();
+    for (let goal of this.goals) {
+      goal.hit = false;
+    }
     this.addObstacles();
     this.enableControls();
     this.displayScreen('playing');
@@ -59,13 +61,23 @@ class Game {
   }
 
   createBalls() {
-    this.balls =[];
+    this.balls = [];
     const constructBalls = (ballArray) => {
       for (let ball of ballArray) {
-        this.balls.push(new Ball(this, ball.x, ball.y));
+        this.balls.push(new Ball(this, ball.x, ball.y, ball.color));
       }
     };
     constructBalls(this.level.balls);
+  }
+
+  createGoals() {
+    this.goals = [];
+    const constructGoals = (goalArray) => {
+      for (let goal of goalArray) {
+        this.goals.push(new Goal(this, goal.x, goal.y));
+      }
+    };
+    constructGoals(this.level.goals);
   }
 
   displayScreen(name) {
@@ -152,25 +164,35 @@ class Game {
     //this.context.fillText(this.timer, 150, 450);
   }
 
-  hitOtherBall(){
+  hitOtherBall() {
     const obj1 = this;
     const obj2 = this.whichBall();
-    let vCollision = {x: obj2.x - obj1.x, y: obj2.y - obj1.y};
-    let distance = Math.sqrt((obj2.x-obj1.x)*(obj2.x-obj1.x) + (obj2.y-obj1.y)*(obj2.y-obj1.y));
-    let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance};
-    let vRelativeVelocity = {x: obj1.speedX - obj2.speedX, y: obj1.speedY - obj2.speedY};
-    let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
-    if (speed < 0){
+    let vCollision = { x: obj2.x - obj1.x, y: obj2.y - obj1.y };
+    let distance = Math.sqrt(
+      (obj2.x - obj1.x) * (obj2.x - obj1.x) +
+        (obj2.y - obj1.y) * (obj2.y - obj1.y)
+    );
+    let vCollisionNorm = {
+      x: vCollision.x / distance,
+      y: vCollision.y / distance
+    };
+    let vRelativeVelocity = {
+      x: obj1.speedX - obj2.speedX,
+      y: obj1.speedY - obj2.speedY
+    };
+    let speed =
+      vRelativeVelocity.x * vCollisionNorm.x +
+      vRelativeVelocity.y * vCollisionNorm.y;
+    if (speed < 0) {
       obj1.x = obj1.x;
       obj1.y = obj1.y;
       obj2.x = obj2.x;
       obj2.y = obj2.y;
-  } 
-  obj1.speedX -= (speed * vCollisionNorm.x);
-obj1.speedY -= (speed * vCollisionNorm.y);
-obj2.speedX += (speed * vCollisionNorm.x);
-obj2.speedY += (speed * vCollisionNorm.y);
-
+    }
+    obj1.speedX -= speed * vCollisionNorm.x;
+    obj1.speedY -= speed * vCollisionNorm.y;
+    obj2.speedX += speed * vCollisionNorm.x;
+    obj2.speedY += speed * vCollisionNorm.y;
   }
 
   runLogic() {
@@ -178,12 +200,11 @@ obj2.speedY += (speed * vCollisionNorm.y);
     for (let ball of this.balls) {
       //console.log(ball);
       ball.runLogic();
-    } 
-    this.goal.runLogic();
+    }
 
     for (const obstacle of this.obstacles) {
       obstacle.runLogic();
-      
+
       const enemyIsOutOfBounds = obstacle.x + obstacle.width < 0;
       if (enemyIsOutOfBounds) {
         console.log('collision!');
@@ -194,7 +215,15 @@ obj2.speedY += (speed * vCollisionNorm.y);
       this.lose();
     }
 
-    if (this.goal.hit) {
+    const allGoalsHit = () => {
+      let solution = 0;
+      for (let goal of this.goals) {
+        if (goal.hit === true) solution += 1;
+      }
+      return solution === this.goals.length;
+    };
+
+    if (allGoalsHit()) {
       for (let ball of this.balls) {
         ball.runLogic();
       }
@@ -232,7 +261,9 @@ obj2.speedY += (speed * vCollisionNorm.y);
   draw() {
     this.clean();
     this.drawBackground();
-    this.goal.draw();
+    for (let goal of this.goals) {
+      goal.draw();
+    }
     this.mousePlayer.draw();
     for (let ball of this.balls) {
       ball.draw();

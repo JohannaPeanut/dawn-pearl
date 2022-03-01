@@ -1,16 +1,12 @@
 class Goal {
-  constructor(gameInstance) {
+  constructor(gameInstance, x, y) {
     this.game = gameInstance;
-    this.radius = 20 + 10;
-    this.x = 70;
-    this.y = 70;
+    this.radius = 30;
+    this.x = x;
+    this.y = y;
     this.hit = false;
     this.ballInGoal = '';
   }
-
-  hitGoal() {}
-
-  runLogic() {}
 
   draw() {
     this.game.context.save();

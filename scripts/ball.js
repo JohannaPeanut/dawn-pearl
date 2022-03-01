@@ -2,8 +2,9 @@ const clamp = (value, min, max) => Math.max(Math.min(value, max), min);
 
 const fps = 60;
 class Ball {
-  constructor(gameInstance, x, y) {
+  constructor(gameInstance, x, y, color) {
     this.game = gameInstance;
+    this.color = color;
     this.player = this.game.player;
     this.radius = 20;
     this.x = x;
@@ -12,6 +13,7 @@ class Ball {
     this.speedX = 50; // pixels per second
     this.gravity = 4000; // pixels per second squared, accelerationY
     this.accelerationX = 0; // pixels per second squared
+    this.hitGoal = '';
   }
 
   runLogic() {
@@ -21,23 +23,26 @@ class Ball {
     this.y = clamp(this.y, this.radius, this.game.canvas.height - this.radius); // problem: i can drag ball out of canvas at bottom
     this.x = clamp(this.x, this.radius, this.game.canvas.width - this.radius);
 
-    if (this.game.goal.checkCollisionWithBall(this)) {
-      this.game.goal.hit = true;
-      this.game.goal.ballInGoal = this;
+    for (let goal of this.game.goals) {
+      if (goal.checkCollisionWithBall(this)) {
+        goal.hit = true;
+        goal.ballInGoal = this;
+        this.hitGoal = goal;
+      }
     }
+    
 
     if (
-      this.game.goal.ballInGoal !== this &&
-      this.game.mousePlayer.draggedBall !== this
+      this.game.mousePlayer.draggedBall !== this && this.hitGoal === ''
     ) {
       this.runLogicDisconnected();
     } else if (
-      this.game.goal.ballInGoal !== this &&
+      this.hitGoal === '' &&
       this.game.mousePlayer.isDraggingBall &&
       this.game.mousePlayer.draggedBall === this
     ) {
       this.runLogicMouse();
-    } else if (this.game.goal.ballInGoal === this) {
+    } else if (this.hitGoal !== '') {
       this.runLogicHitGoal();
     }
   }
@@ -105,9 +110,8 @@ class Ball {
   }
 
   runLogicHitGoal() {
-    this.x = this.game.goal.x;
-    this.y = this.game.goal.y;
-    this.game.mousePlayer.isDraggingBall = false;
+    this.x = this.hitGoal.x;
+    this.y = this.hitGoal.y;
   }
 
   runLogicMouse() {
@@ -182,7 +186,7 @@ class Ball {
 
   draw() {
     this.game.context.save();
-    this.game.context.fillStyle = 'red';
+    this.game.context.fillStyle = this.color;
     this.game.context.beginPath();
     game.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
     this.game.context.closePath();
