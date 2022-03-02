@@ -25,8 +25,8 @@ tryAgainButton.addEventListener('click', () => {
   game.start();
 });
 
-/* const gameLevel2 = new Game(canvasElement, screenElements, 2);
-gameLevel2.start(); */
+/* const gameLevel5 = new Game(canvasElement, screenElements, 5);
+gameLevel5.start(); */
 
 function startNextLevel(levelNo) {
   //let levelName = `gameLevel${levelNo}`
@@ -43,6 +43,10 @@ function startNextLevel(levelNo) {
     case 4:
       const gameLevel4 = new Game(canvasElement, screenElements, levelNo);
       gameLevel4.start(); // problem: can you code a flexible var name? without if/switch?
+      break;
+    case 5:
+      const gameLevel5 = new Game(canvasElement, screenElements, levelNo);
+      gameLevel5.start(); // problem: can you code a flexible var name? without if/switch?
       break;
     default:
       playingScreenElement.style.display = 'none';

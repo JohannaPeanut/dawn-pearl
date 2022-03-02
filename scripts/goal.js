@@ -23,6 +23,7 @@ class Goal {
     //
 
     return (
+      !this.hit &&
       // is right edge of element in front of left edge of enemy
       ball.x + ball.radius > this.x &&
       // is left edge of element before of right edge of enemy

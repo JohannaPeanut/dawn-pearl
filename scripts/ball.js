@@ -20,8 +20,11 @@ class Ball {
     //problem wenn player mit obstacle kollidiert und gleichzeitig mit ball (diesen also aufnehmen will)
     // problem solved maybe if player cant pick up ball when it is intersecting with obstacles
     //tried avoid that buggy behavior with this.game.canvas.height - 1.5 * this.radius but then player cannot pick up ball when it is jumping....
-    this.y = clamp(this.y, this.radius, this.game.canvas.height - this.radius); // problem: i can drag ball out of canvas at bottom
+    this.y = clamp(this.y, this.radius, this.game.canvas.height - this.radius);
     this.x = clamp(this.x, this.radius, this.game.canvas.width - this.radius);
+
+    this.speedY = clamp(this.speedY, -1500, 1500);
+    this.speedX = clamp(this.speedX, -1500, 1500);
 
     for (let goal of this.game.goals) {
       if (goal.checkCollisionWithBall(this)) {
@@ -30,11 +33,8 @@ class Ball {
         this.hitGoal = goal;
       }
     }
-    
 
-    if (
-      this.game.mousePlayer.draggedBall !== this && this.hitGoal === ''
-    ) {
+    if (this.game.mousePlayer.draggedBall !== this && this.hitGoal === '') {
       this.runLogicDisconnected();
     } else if (
       this.hitGoal === '' &&
@@ -88,20 +88,9 @@ class Ball {
           );
           this.speedX = this.speedX * -0.5;
         }
-        /* if (intersectingObstacle.y < this.y) {
-          //if intersecting obstacle is on top of ball --> new clamp on top of iobstacle
-          console.log('obstacle top');
-          
-          this.speedY = this.speedY * -0.1;
-        } else {
-          console.log('obstacle bottom');
-          //if intersecting obstacle is underneath ball --> new clamp for underneath obstacle
-          
-          this.speedY = this.speedY * -0.1;
-        } */
       }
     }
-    }
+  }
 
   runLogicHitGoal() {
     this.x = this.hitGoal.x;
@@ -112,37 +101,46 @@ class Ball {
     let deltaY = this.game.mousePlayer.y - this.y;
     let deltaX = this.game.mousePlayer.x - this.x;
 
-    if (deltaX > 200 || deltaX < -200) {
-      this.game.mousePlayer.isDraggingBall = false;
-      this.game.mousePlayer.draggedBall = '';
+    this.speedX = deltaX * 10;
+    this.speedY = deltaY * 10;
+
+    let newy = this.y + this.speedY / fps;
+    newy -= this.radius / 5;
+    let newx = this.x + this.speedX / fps;
+
+    if (deltaX > 300 || deltaX < -300) {
+      this.game.mousePlayer.loseConnection();
     } else {
-      this.speedX = deltaX * 10;
-      this.speedY = deltaY * 10;
-      
-      this.y += this.speedY / fps;
-      this.y -= this.radius / 5;
-      this.x += this.speedX / fps;
+      this.y = newy;
+      this.x = newx;
 
       for (let obstacle of this.game.obstacles) {
         if (obstacle.checkCollision(this)) {
-          this.loseConnection();
+          this.game.mousePlayer.loseConnection();
+          const intersectingObstacle = this.whichObstale();
+          if (intersectingObstacle.x < this.x) {
+            this.x = clamp(
+              this.x,
+              this.radius + intersectingObstacle.x + intersectingObstacle.width,
+              this.game.canvas.width - this.radius
+            );
+            this.game.mousePlayer.loseConnection();
+            this.game.mousePlayer.isDown = false;
+            this.speedX = this.speedX * -0.8;
+            this.speedY = this.speedY * -0.8;
+          } else {
+            this.x = clamp(
+              this.x,
+              this.radius,
+              intersectingObstacle.x - this.radius
+            );
+            this.game.mousePlayer.loseConnection();
+            this.game.mousePlayer.isDown = false;
+            this.speedX = this.speedX * -0.8;
+            this.speedY = this.speedY * -0.8;
+          }
           // klonkSound.play();
         }
-      }
-    }
-  }
-
-
-  loseConnection() {
-    if (this.game.mousePlayer.isDraggingBall) {
-      this.game.mousePlayer.isDraggingBall = false;
-      this.game.mousePlayer.draggedBall = '';
-
-      const intersectingObstacle = this.whichObstale();
-      if (intersectingObstacle.x < this.x) {
-        this.x += 1.2 * this.radius + 2; // if obstacle is left from ball --> ball falls to the right
-      } else {
-        this.x -= 1.2 * this.radius + 2; // if obstacle is right from ball --> ball falls to the left
       }
     }
   }

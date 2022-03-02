@@ -20,7 +20,7 @@ class Game {
     this.mousePlayer = new mousePlayer(this);
     this.balls = [];
     this.goals = [];
-    this.duration = 300; //sec*10
+    this.duration = 500; //sec*10
     this.startTime = 0;
     this.timer = this.duration;
     this.screens = screens;
@@ -115,30 +115,21 @@ class Game {
 
   enableControls() {
     if (this.running) {
-      const keysToPreventDefaultAction = ['ArrowUp', 'ArrowRight', 'ArrowLeft'];
-      window.addEventListener('keydown', (event) => {
-        if (keysToPreventDefaultAction.includes(event.code)) {
-          event.preventDefault();
-        }
-        this.keysDown.push(event.code);
-      });
-      window.addEventListener('keyup', (event) => {
-        this.keysDown = this.keysDown.filter((code) => code !== event.code);
-      });
-
       window.addEventListener('mousedown', (e) => {
         this.mousePlayer.isDown = true;
       });
 
-      window.addEventListener('mousemove', (e) => {
-        this.mousePlayer.x = e.offsetX;
-        this.mousePlayer.y = e.offsetY;
+      window.addEventListener('mousemove', (e) => { 
+        if (e.offsetX < 0 || e.offsetX > this.canvas.width || e.offsetY < 0 || e.offsetY > this.canvas.height) this.mousePlayer.isDown = false;
+          this.mousePlayer.x = e.offsetX;
+          this.mousePlayer.y = e.offsetY;
       });
 
       window.addEventListener('mouseup', (e) => {
-        if (this.mousePlayer.isDown === true) {
+        if (this.mousePlayer.isDown) {
           this.mousePlayer.isDown = false;
           this.mousePlayer.isDraggingBall = false;
+          this.mousePlayer.draggedBall = '';
         }
       });
     }

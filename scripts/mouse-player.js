@@ -16,8 +16,7 @@ class mousePlayer {
       this.y < 0 ||
       this.y > this.game.context.height
     ) {
-      this.isDraggingBall = false;
-      this.draggedBall = '';
+      this.loseConnection();
     } else {
       for (let ball of this.game.balls) {
         if (this.checkCollisionWithBall(ball)) {
@@ -28,6 +27,10 @@ class mousePlayer {
         }
       }
     }
+  }
+  loseConnection() {
+      this.isDraggingBall = false;
+      this.draggedBall = '';
   }
 
   checkCollisionWithBall(element) {
