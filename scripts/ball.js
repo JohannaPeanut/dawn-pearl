@@ -31,6 +31,7 @@ class Ball {
         goal.hit = true;
         goal.ballInGoal = this;
         this.hitGoal = goal;
+        this.game.mousePlayer.loseConnection();
       }
     }
 
@@ -187,12 +188,6 @@ class Ball {
   whichObstale() {
     for (let obstacle of this.game.obstacles) {
       if (obstacle.checkCollision(this)) return obstacle; //returns intersecting obstacle instance
-    }
-  }
-
-  whichBall() {
-    for (let ball of this.game.balls) {
-      if (ball.checkCollision(this)) return ball; //returns intersecting obstacle instance
     }
   }
 }

@@ -10,9 +10,7 @@ body {
   align-items: center;
   justify-content: center;
   font-family: 'Barlow';
-  font-size:32px;
-  
-
+  font-size: 32px;
 }
 
 canvas {
@@ -30,7 +28,7 @@ button {
   font-family: inherit;
   font-size: inherit;
   border-radius: 10%; */
-  
+
   font-family: inherit;
   font-size: inherit;
   line-height: 1rem;
@@ -53,19 +51,19 @@ button {
     0px -9px 10px -4px rgba(255, 255, 255, 1) inset,
     0 -20px 1px -6px rgba(0, 0, 0, 0.125) inset;
   text-shadow: 0 1px 2px #fff, 0 0 3px #fff, 0 0 10px #fff;
-  outline: none ;
+  outline: none;
 }
 
 button:hover {
   box-shadow: 0 14px 14px 0 #f7f5f5, 0 10px 10px 0 #a39d9d;
-  }
+}
 
-p{
+p {
   color: white;
   text-shadow: 4px 4px 10px #f7f5f5;
   padding: 15px;
   font-family: inherit;
-  font-size: 2em
+  font-size: 2em;
 }
 
 .screen {
@@ -76,4 +74,12 @@ p{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.mouseDown {
+  cursor: url(/images/hand_light.png) 41.5 50, pointer;
+}
+
+.mouseUp {
+  cursor: url(/images/hand.png) 41.5 50, auto;
 }

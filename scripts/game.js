@@ -119,10 +119,16 @@ class Game {
         this.mousePlayer.isDown = true;
       });
 
-      window.addEventListener('mousemove', (e) => { 
-        if (e.offsetX < 0 || e.offsetX > this.canvas.width || e.offsetY < 0 || e.offsetY > this.canvas.height) this.mousePlayer.isDown = false;
-          this.mousePlayer.x = e.offsetX;
-          this.mousePlayer.y = e.offsetY;
+      window.addEventListener('mousemove', (e) => {
+        if (
+          e.offsetX < 0 ||
+          e.offsetX > this.canvas.width ||
+          e.offsetY < 0 ||
+          e.offsetY > this.canvas.height
+        )
+          this.mousePlayer.isDown = false;
+        this.mousePlayer.x = e.offsetX;
+        this.mousePlayer.y = e.offsetY;
       });
 
       window.addEventListener('mouseup', (e) => {
@@ -130,6 +136,7 @@ class Game {
           this.mousePlayer.isDown = false;
           this.mousePlayer.isDraggingBall = false;
           this.mousePlayer.draggedBall = '';
+          //this.canvas.classList.remove("mouseDown");
         }
       });
     }
@@ -194,6 +201,14 @@ class Game {
       }
       this.draw();
       this.nextLevel();
+    }
+
+    if (this.mousePlayer.isDraggingBall) {
+      this.canvas.classList.add('mouseDown');
+      this.canvas.classList.remove('mouseUp');
+    } else {
+      this.canvas.classList.remove('mouseDown');
+      this.canvas.classList.add('mouseUp');
     }
   }
 

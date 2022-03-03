@@ -12,6 +12,10 @@ const screenElements = {
   end: endScreenElement
 };
 
+const foodImage = new Image();
+ballImage.src = 'images/Metal-Ball-Transparent.png';
+
+
 let levelNo = 1;
 
 const game = new Game(canvasElement, screenElements, levelNo);
