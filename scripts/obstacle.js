@@ -25,7 +25,7 @@ class Obstacle {
   draw() {
     this.game.context.save();
     const flickering = Math.random();
-    if(flickering < 0.9) {
+    if(flickering < 0.95) {
    
     this.game.context.beginPath();
     this.game.context.lineTo(this.x, this.y);
