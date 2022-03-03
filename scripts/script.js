@@ -12,8 +12,11 @@ const screenElements = {
   end: endScreenElement
 };
 
-const foodImage = new Image();
+const ballImage = new Image();
 ballImage.src = 'images/Metal-Ball-Transparent.png';
+
+const smokeImage = new Image();
+smokeImage.src = 'images/pngfind.com-white-smoke-png-1791303.png';
 
 
 let levelNo = 1;
@@ -29,8 +32,8 @@ tryAgainButton.addEventListener('click', () => {
   game.start();
 });
 
-/* const gameLevel5 = new Game(canvasElement, screenElements, 5);
-gameLevel5.start(); */
+/* const gameLevel3 = new Game(canvasElement, screenElements, 3);
+gameLevel3.start(); */
 
 function startNextLevel(levelNo) {
   //let levelName = `gameLevel${levelNo}`
