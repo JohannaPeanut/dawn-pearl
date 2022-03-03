@@ -63,7 +63,8 @@ p {
   text-shadow: 4px 4px 10px #f7f5f5;
   padding: 15px;
   font-family: inherit;
-  font-size: 2em;
+  font-size: 1em;
+  text-align: center;
 }
 
 .screen {
@@ -74,12 +75,13 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 50px;
 }
 
 .mouseDown {
-  cursor: url(/images/hand_light.png) 41.5 50, pointer;
+  cursor: url(/images/hand_blue_light.png) 41.5 50, pointer;
 }
 
 .mouseUp {
-  cursor: url(/images/hand.png) 41.5 50, auto;
+  cursor: url(/images/hand_blue.png) 41.5 50, auto;
 }

@@ -5,12 +5,13 @@
 // that element to the canvas
 const canvasElement = document.querySelector('canvas');
 
-const ballStartX = canvasElement.width - 50;
-const ballStartY = 100;
+const bodyElement = document.querySelector('body');
 
 const klonkSound = new Audio(
   'sounds/150101__peter-lustig__topf-03-massiv-klein-trocken.wav'
 );
+
+bodyElement.classList.add('mouseUp');
 
 class Game {
   constructor(canvasElement, screens, level) {
@@ -20,7 +21,7 @@ class Game {
     this.mousePlayer = new mousePlayer(this);
     this.balls = [];
     this.goals = [];
-    this.duration = 500; //sec*10
+    this.duration = 400; //sec*10
     this.startTime = 0;
     this.timer = this.duration;
     this.screens = screens;

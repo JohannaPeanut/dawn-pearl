@@ -24,7 +24,10 @@ class Obstacle {
 
   draw() {
     this.game.context.save();
-    /* this.game.context.beginPath();
+    const flickering = Math.random();
+    if(flickering < 0.9) {
+   
+    this.game.context.beginPath();
     this.game.context.lineTo(this.x, this.y);
     this.game.context.lineTo(this.x + this.width, this.y);
     this.game.context.lineTo(this.x + this.width, this.y + this.height);
@@ -37,9 +40,9 @@ class Obstacle {
     );
 
     this.game.context.fillStyle = ballImagePattern;
-    this.game.context.fill(); */
+    this.game.context.fill();
     //this.game.context.fillRect(this.x, this.y, this.width, this.height);
-    this.game.context.strokeStyle = 'white';
+    /* this.game.context.strokeStyle = 'white';
     this.game.context.lineWidth = 3;
     this.game.context.beginPath();
     this.game.context.lineTo(this.x, this.y);
@@ -47,8 +50,9 @@ class Obstacle {
     this.game.context.lineTo(this.x + this.width, this.y + this.height);
     this.game.context.lineTo(this.x, this.y + this.height);
     this.game.context.closePath();
-    this.game.context.stroke();
+    this.game.context.stroke(); */
     this.game.context.restore();
+    }
   }
 
   checkCollision(element) {

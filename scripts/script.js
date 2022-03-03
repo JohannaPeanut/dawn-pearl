@@ -15,8 +15,11 @@ const screenElements = {
 const ballImage = new Image();
 ballImage.src = 'images/Metal-Ball-Transparent.png';
 
+const holeImage = new Image();
+holeImage.src = 'images/hole.png';
+
 const smokeImage = new Image();
-smokeImage.src = 'images/pngfind.com-white-smoke-png-1791303.png';
+smokeImage.src = 'images/smoke.png';
 
 
 let levelNo = 1;
