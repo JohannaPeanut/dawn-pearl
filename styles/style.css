@@ -5,11 +5,12 @@ body {
 
 body {
   margin: 0;
-  background-color: #575151;
+  padding: 0;
+  background-color: #948a9c;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Barlow';
+  font-family: 'Barlow', Helvetica, sans-serif;
   font-size: 32px;
 }
 
@@ -17,22 +18,41 @@ canvas {
   background-color: rgb(15, 0, 203);
   border: #f7f5f5 5px solid;
   border-radius: 1%;
-  box-shadow: 0 1px 14px 0 #f7f5f5, 0 10px 10px 0 #a39d9d;
+  box-shadow: 0 0 2em white;
+  margin-bottom: 4em;
 }
 
-button {
-  /* color: white;
-  border: white 1px solid;
-  background-color: #575151;
-  padding: 15px;
-  font-family: inherit;
-  font-size: inherit;
-  border-radius: 10%; */
-
+.screen button,
+.screen p {
+  color: rgba(255, 215, 0);
+  background-color: transparent;
   font-family: inherit;
   font-size: inherit;
   line-height: 1rem;
-  padding: 1.5rem 3.5rem;
+  padding: 0.3em;
+  border: 0;
+  margin-bottom: 5em;
+  margin-left: 2em;
+}
+
+img {
+  width: 1050px;
+}
+
+.parent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+.help-button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1rem;
+  padding: 0.3em;
   background-color: #fafafa;
   background-image: linear-gradient(
     #ddd,
@@ -52,32 +72,32 @@ button {
     0 -20px 1px -6px rgba(0, 0, 0, 0.125) inset;
   text-shadow: 0 1px 2px #fff, 0 0 3px #fff, 0 0 10px #fff;
   outline: none;
+  position: absolute;
+  top: 4.5em;
+  left: 0;
 }
 
-button:hover {
-  box-shadow: 0 14px 14px 0 #f7f5f5, 0 10px 10px 0 #a39d9d;
-}
-
-p {
-  color: white;
-  text-shadow: 4px 4px 10px #f7f5f5;
-  padding: 15px;
-  font-family: inherit;
-  font-size: 1em;
-  text-align: center;
-}
-
-img {
-  width: 1050px;
- 
-}
-
-.parent {
-  position: relative;
-  flex-direction: column;
-  justify-content: center;
+.help {
+  display: flex; /* or inline-flex */
   align-items: center;
-  padding: 50px;
+  justify-content: center;
+  background-color: rgba(255, 215, 0);
+  top: 1em;
+  left: -2.2em;
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  box-shadow: 0 0 1em white;
+  border-radius: 50%;
+}
+
+.help p {
+  color: #575151;
+  margin: 1em 1.2em;
+  padding: 1em;
+  text-align: center;
+  line-height: 1.2em;
+  font-size: 0.5em;
 }
 
 .screen {

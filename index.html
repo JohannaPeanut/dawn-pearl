@@ -11,7 +11,15 @@
   </head>
   <body>
     <div class="parent">
-    <img src="images/liquid_metal_text_effect.png" alt="Dawn Pearl">
+      <button class="mouseDown help-button">?</button>
+      <div class="help  mouseDown" style="display: none">
+        <p class="mouseDown">
+          GOAL OF THE GAME: ALL PEARLS HAVE TO BE IN THEIR HOLES BEFORE IT IS DAWN. <br>
+          CONTROL: BY CLICKING ON THE PEARL YOU CAN GRAB IT. WHILE HOLDING THE MOUSE DOWN YOU DRAG THE PEARL.
+          <br>OBSTACLES: IF THE PEARL TOUCHES A SMOKEY OBSTACLE IT FALLS DOWN.
+        </p>
+      </div>
+    <img src="images/liquid_metal_text_effect_title2.png" alt="Dawn Pearl">
     <div class="screen" id="start-screen">
       
      <!--  <p>catch the pearls and drag them to the holes before it is dawn</p> -->
@@ -21,7 +29,7 @@
       <canvas width="1050" height="450"></canvas>
     </div>
     <div class="screen" id="won-screen" style="display: none">
-      <p>won</p>
+      <p>YOU WON!</p>
     </div>
     <div class="screen" id="game-over-screen" style="display: none">
       <button class="mouseDown">TRY AGAIN</button>

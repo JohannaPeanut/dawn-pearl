@@ -9,12 +9,13 @@ class Goal {
   }
 
   draw() {
+    
     this.game.context.save();
     this.game.context.strokeStyle = 'white';
-    this.game.context.lineWidth = 3;
+    this.game.context.lineWidth = 1;
     this.game.context.beginPath();
     this.game.context.drawImage(holeImage, this.x - this.radius, this.y - this.radius)
-    /* game.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI); */
+    /* if(this.hit) game.context.arc(this.x, this.y, this.radius-1.8, 0, 2 * Math.PI);  */
     this.game.context.closePath();
     this.game.context.stroke();
     this.game.context.restore();

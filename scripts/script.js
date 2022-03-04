@@ -2,9 +2,11 @@ const startScreenElement = document.getElementById('start-screen');
 const playingScreenElement = document.getElementById('playing-screen');
 const endScreenElement = document.getElementById('game-over-screen');
 const wonScreenElement = document.getElementById('won-screen');
+const helpDivElement = document.querySelector('.help')
 
 const startButton = startScreenElement.querySelector('button');
 const tryAgainButton = endScreenElement.querySelector('button');
+const helpButton = document.querySelector('.help-button');
 
 const screenElements = {
   start: startScreenElement,
@@ -17,6 +19,9 @@ ballImage.src = 'images/Metal-Ball-Transparent.png';
 
 const holeImage = new Image();
 holeImage.src = 'images/hole.png';
+
+const holeHitImage = new Image();
+holeHitImage.src = 'images/hole_hit.png';
 
 const smokeImage = new Image();
 smokeImage.src = 'images/smoke.png';
@@ -34,6 +39,14 @@ tryAgainButton.addEventListener('click', () => {
   levelNo = 1;
   game.start();
 });
+
+helpButton.addEventListener('click', () => {
+  helpDivElement.style.display = '';
+})
+
+helpDivElement.addEventListener('click', () => {
+  helpDivElement.style.display = 'none';
+})
 
 /* const gameLevel3 = new Game(canvasElement, screenElements, 3);
 gameLevel3.start(); */
