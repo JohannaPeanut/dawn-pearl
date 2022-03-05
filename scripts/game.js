@@ -21,13 +21,12 @@ class Game {
     this.mousePlayer = new mousePlayer(this);
     this.balls = [];
     this.goals = [];
-    this.duration = 450; //sec*10
+    //this.duration = 450; //sec*10
     this.startTime = 0;
-    this.timer = this.duration;
     this.screens = screens;
     this.running = false;
     this.obstacles = [];
-    this.keysDown = [];
+
     switch (level) {
       case 1:
         this.level = level1;
@@ -55,7 +54,50 @@ class Game {
   start() {
     this.running = true;
     this.startTime = Date.now();
+    this.duration = 450;
+    let monthNo = new Date().getMonth(); //returns no between 0 and 11 (month, when game is played)
+    switch (monthNo) { //adjusts the duration of the levels according to the length of the night in the month (location: Berlin)
+      case 0:
+        this.duration *= 1.3;
+        break;
+      case 1:
+        this.duration *= 1.15;
+        break;
+      case 2:
+        this.duration *= 1;
+        break;
+      case 3:
+        this.duration *= 0.9;
+        break;
+      case 4:
+        this.duration *= 0.8;
+        break;
+      case 5:
+        this.duration *= 0.7;
+        break;
+      case 6:
+        this.duration *= 0.8;
+        break;
+      case 7:
+        this.duration *= 0.9;
+        break;
+      case 8:
+        this.duration *= 1;
+        break;
+      case 9:
+        this.duration *= 1.14;
+        break;
+      case 10:
+        this.duration *= 1.28;
+        break;
+      case 11:
+        this.duration *= 1.4;
+        break;
+      default:
+        break;
+    }
     this.timer = this.duration;
+    console.log(this.timer);
     this.createBalls();
     this.createGoals();
     for (let goal of this.goals) {
