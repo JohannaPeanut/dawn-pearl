@@ -113,9 +113,9 @@ img {
 }
 
 .mouseDown {
-  cursor: url(/images/hand_blue_light.png) 41.5 50, pointer;
+  cursor: url(/images/hand_blue_light_1.png) 41.5 50, pointer;
 }
 
 .mouseUp {
-  cursor: url(/images/hand_blue.png) 41.5 50, auto;
+  cursor: url(/images/hand_blue_1.png) 41.5 50, auto;
 }

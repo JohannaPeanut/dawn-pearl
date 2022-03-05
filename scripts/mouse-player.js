@@ -29,8 +29,8 @@ class mousePlayer {
     }
   }
   loseConnection() {
-      this.isDraggingBall = false;
-      this.draggedBall = '';
+    this.isDraggingBall = false;
+    this.draggedBall = '';
   }
 
   checkCollisionWithBall(element) {

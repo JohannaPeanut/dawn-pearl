@@ -25,24 +25,23 @@ class Obstacle {
   draw() {
     this.game.context.save();
     const flickering = Math.random();
-    if(flickering < 0.95) {
-   
-    this.game.context.beginPath();
-    this.game.context.lineTo(this.x, this.y);
-    this.game.context.lineTo(this.x + this.width, this.y);
-    this.game.context.lineTo(this.x + this.width, this.y + this.height);
-    this.game.context.lineTo(this.x, this.y + this.height);
-    this.game.context.closePath();
+    if (flickering < 0.95) {
+      this.game.context.beginPath();
+      this.game.context.lineTo(this.x, this.y);
+      this.game.context.lineTo(this.x + this.width, this.y);
+      this.game.context.lineTo(this.x + this.width, this.y + this.height);
+      this.game.context.lineTo(this.x, this.y + this.height);
+      this.game.context.closePath();
 
-    const ballImagePattern = this.game.context.createPattern(
-      smokeImage,
-      'repeat'
-    );
+      const ballImagePattern = this.game.context.createPattern(
+        smokeImage,
+        'repeat'
+      );
 
-    this.game.context.fillStyle = ballImagePattern;
-    this.game.context.fill();
-    //this.game.context.fillRect(this.x, this.y, this.width, this.height);
-    /* this.game.context.strokeStyle = 'white';
+      this.game.context.fillStyle = ballImagePattern;
+      this.game.context.fill();
+      //this.game.context.fillRect(this.x, this.y, this.width, this.height);
+      /* this.game.context.strokeStyle = 'white';
     this.game.context.lineWidth = 3;
     this.game.context.beginPath();
     this.game.context.lineTo(this.x, this.y);
@@ -51,7 +50,7 @@ class Obstacle {
     this.game.context.lineTo(this.x, this.y + this.height);
     this.game.context.closePath();
     this.game.context.stroke(); */
-    this.game.context.restore();
+      this.game.context.restore();
     }
   }
 

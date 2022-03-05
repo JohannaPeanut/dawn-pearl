@@ -5,36 +5,40 @@
     <meta name="viewport" content="width=device-width" />
     <title>d a w n</title>
     <link href="styles/style.css" rel="stylesheet" type="text/css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300&display=swap" rel="stylesheet"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@300&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="parent">
       <button class="mouseDown help-button">?</button>
-      <div class="help  mouseDown" style="display: none">
+      <div class="help mouseDown" style="display: none">
         <p class="mouseDown">
-          GOAL OF THE GAME: ALL PEARLS HAVE TO BE IN THEIR HOLES BEFORE IT IS DAWN. <br>
-          CONTROL: BY CLICKING ON THE PEARL YOU CAN GRAB IT. WHILE HOLDING THE MOUSE DOWN YOU DRAG THE PEARL.
-          <br>OBSTACLES: IF THE PEARL TOUCHES A SMOKEY OBSTACLE IT FALLS DOWN.
+          GOAL OF THE GAME: ALL PEARLS HAVE TO BE IN THEIR HOLES BEFORE IT IS
+          DAWN. <br />
+          CONTROL: BY CLICKING ON THE PEARL YOU CAN GRAB IT. WHILE HOLDING THE
+          MOUSE DOWN YOU DRAG THE PEARL.
+          <br />OBSTACLES: IF THE PEARL TOUCHES A SMOKEY OBSTACLE IT FALLS DOWN.
         </p>
       </div>
-    <img src="images/liquid_metal_text_effect_title2.png" alt="Dawn Pearl">
-    <div class="screen" id="start-screen">
-      
-     <!--  <p>catch the pearls and drag them to the holes before it is dawn</p> -->
-      <button class="mouseDown">START</button>
+      <img src="images/liquid_metal_text_effect_title2.png" alt="Dawn Pearl" />
+      <div class="screen" id="start-screen">
+        <!--  <p>catch the pearls and drag them to the holes before it is dawn</p> -->
+        <button class="mouseDown">START</button>
+      </div>
+      <div class="screen" id="playing-screen" style="display: none">
+        <canvas width="1050" height="450"></canvas>
+      </div>
+      <div class="screen" id="won-screen" style="display: none">
+        <p>YOU WON!</p>
+      </div>
+      <div class="screen" id="game-over-screen" style="display: none">
+        <button class="mouseDown">TRY AGAIN</button>
+      </div>
     </div>
-    <div class="screen" id="playing-screen" style="display: none">
-      <canvas width="1050" height="450"></canvas>
-    </div>
-    <div class="screen" id="won-screen" style="display: none">
-      <p>YOU WON!</p>
-    </div>
-    <div class="screen" id="game-over-screen" style="display: none">
-      <button class="mouseDown">TRY AGAIN</button>
-    </div>
-  </div>
     <script src="scripts/levels.js"></script>
     <script src="scripts/mouse-player.js"></script>
     <script src="scripts/goal.js"></script>

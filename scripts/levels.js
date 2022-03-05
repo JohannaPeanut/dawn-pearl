@@ -48,14 +48,14 @@ const level2 = new Level(
 
 const level3 = new Level(
   [
-    { x: 350, y: 100, height: 50, move: true  },
-    { x: 350, y: 160, height: 50, move: true  },
-    { x: 350, y: 220, height: 50, move: true  },
-    { x: 350, y: 280, height: 50, move: true  },
-    { x: 450, y: -2, height: 200},
+    { x: 350, y: 100, height: 50, move: true },
+    { x: 350, y: 160, height: 50, move: true },
+    { x: 350, y: 220, height: 50, move: true },
+    { x: 350, y: 280, height: 50, move: true },
+    { x: 450, y: -2, height: 200 },
 
     { x: 130, y: 70, height: 308 },
-    
+
     { x: 650, y: 150, height: 130 },
     { x: 600, y: 150, height: 130 },
     { x: 710, y: 150, height: 130 },
@@ -93,23 +93,27 @@ const level4 = new Level(
     { x: 700, y: 0, height: 200, move: true },
     { x: 700, y: 270, height: 200, move: true }
   ],
-  [{ x: 950, y: 50 }, 
+  [
+    { x: 950, y: 50 },
     { x: 260, y: 150 },
     { x: 70, y: 240 },
-    { x: 630, y: 340 }],
-  [{ x: 70, y: 70 },
+    { x: 630, y: 340 }
+  ],
+  [
+    { x: 70, y: 70 },
     { x: 410, y: 340 },
     { x: 800, y: 140 },
-    { x: 140, y: 100 }]
+    { x: 140, y: 100 }
+  ]
 );
 
 const level5 = new Level(
   [
-    { x: 190, y: 100, height: 50, move: true  },
-    { x: 190, y: 160, height: 50, move: true  },
-    { x: 190, y: 220, height: 50, move: true  },
-    { x: 190, y: 280, height: 50, move: true  },
-    { x: 190, y: 340, height: 50, move: true  },
+    { x: 190, y: 100, height: 50, move: true },
+    { x: 190, y: 160, height: 50, move: true },
+    { x: 190, y: 220, height: 50, move: true },
+    { x: 190, y: 280, height: 50, move: true },
+    { x: 190, y: 340, height: 50, move: true },
     { x: 900, y: 0, height: 200, move: true },
     { x: 350, y: 100, height: 500, move: true },
     { x: 400, y: 250, height: 500, move: true },
@@ -119,8 +123,7 @@ const level5 = new Level(
     { x: 700, y: 270, height: 200, move: true }
   ],
   [
-    
-    { x: 950, y: 50 }, 
+    { x: 950, y: 50 },
     { x: 260, y: 250 },
     { x: 70, y: 240 },
     { x: 950, y: 200 },
@@ -131,7 +134,7 @@ const level5 = new Level(
     { x: 70, y: 140 },
     { x: 270, y: 70 },
     { x: 270, y: 140 },
-    { x: 270, y: 210 },
+    { x: 270, y: 210 }
   ]
 );
 

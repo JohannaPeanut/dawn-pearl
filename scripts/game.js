@@ -56,7 +56,9 @@ class Game {
     this.startTime = Date.now();
     this.duration = 450;
     let monthNo = new Date().getMonth(); //returns no between 0 and 11 (month, when game is played)
-    switch (monthNo) { //adjusts the duration of the levels according to the length of the night in the month (location: Berlin)
+    switch (
+      monthNo //adjusts the duration of the levels according to the length of the night in the month (location: Berlin)
+    ) {
       case 0:
         this.duration *= 1.3;
         break;
@@ -97,7 +99,6 @@ class Game {
         break;
     }
     this.timer = this.duration;
-    console.log(this.timer);
     this.createBalls();
     this.createGoals();
     for (let goal of this.goals) {
