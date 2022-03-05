@@ -2,7 +2,7 @@ const startScreenElement = document.getElementById('start-screen');
 const playingScreenElement = document.getElementById('playing-screen');
 const endScreenElement = document.getElementById('game-over-screen');
 const wonScreenElement = document.getElementById('won-screen');
-const helpDivElement = document.querySelector('.help')
+const helpDivElement = document.querySelector('.help');
 
 const startButton = startScreenElement.querySelector('button');
 const tryAgainButton = endScreenElement.querySelector('button');
@@ -26,7 +26,6 @@ holeHitImage.src = 'images/hole_hit.png';
 const smokeImage = new Image();
 smokeImage.src = 'images/smoke.png';
 
-
 let levelNo = 1;
 
 const game = new Game(canvasElement, screenElements, levelNo);
@@ -42,13 +41,13 @@ tryAgainButton.addEventListener('click', () => {
 
 helpButton.addEventListener('click', () => {
   helpDivElement.style.display = '';
-})
+});
 
 helpDivElement.addEventListener('click', () => {
   helpDivElement.style.display = 'none';
-})
+});
 
-/* const gameLevel3 = new Game(canvasElement, screenElements, 3);
+/* const gameLevel3 = new Game(canvasElement, screenElements, 6);
 gameLevel3.start(); */
 
 function startNextLevel(levelNo) {
@@ -70,6 +69,10 @@ function startNextLevel(levelNo) {
     case 5:
       const gameLevel5 = new Game(canvasElement, screenElements, levelNo);
       gameLevel5.start(); // problem: can you code a flexible var name? without if/switch?
+      break;
+    case 6:
+      const gameLevel6 = new Game(canvasElement, screenElements, levelNo);
+      gameLevel6.start(); // problem: can you code a flexible var name? without if/switch?
       break;
     default:
       playingScreenElement.style.display = 'none';

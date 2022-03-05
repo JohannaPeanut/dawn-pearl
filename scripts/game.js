@@ -21,7 +21,7 @@ class Game {
     this.mousePlayer = new mousePlayer(this);
     this.balls = [];
     this.goals = [];
-    this.duration = 400; //sec*10
+    this.duration = 450; //sec*10
     this.startTime = 0;
     this.timer = this.duration;
     this.screens = screens;
@@ -43,6 +43,9 @@ class Game {
         break;
       case 5:
         this.level = level5;
+        break;
+      case 6:
+        this.level = level6;
         break;
       default:
         break;
@@ -295,6 +298,6 @@ class Game {
   nextLevel() {
     this.running = false;
     levelNo++;
-    window.setTimeout(() => startNextLevel(levelNo), 3000);
+    window.setTimeout(() => startNextLevel(levelNo), 2500);
   }
 }

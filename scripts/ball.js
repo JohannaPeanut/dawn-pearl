@@ -2,10 +2,8 @@ const clamp = (value, min, max) => Math.max(Math.min(value, max), min);
 
 const fps = 60;
 class Ball {
-  constructor(gameInstance, x, y, color) {
+  constructor(gameInstance, x, y) {
     this.game = gameInstance;
-    this.color = color;
-    this.player = this.game.player;
     this.radius = 20;
     this.x = x;
     this.y = y; //this.game.canvas.height - this.radius - 200;
@@ -148,20 +146,11 @@ class Ball {
 
   draw() {
     this.game.context.save();
-    this.game.context.drawImage(ballImage, this.x - this.radius, this.y - this.radius)
-    /* this.game.context.beginPath();
-    this.game.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    this.game.context.closePath();
-
-    const ballImagePattern = this.game.context.createPattern(ballImage, 'repeat');
-
-    this.game.context.fillStyle = ballImagePattern;
-    this.game.context.fill(); */
-    /* this.game.context.fillStyle = this.color;
-    this.game.context.beginPath();
-    game.context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    this.game.context.closePath();
-    this.game.context.fill(); */
+    this.game.context.drawImage(
+      ballImage,
+      this.x - this.radius,
+      this.y - this.radius
+    );
     this.game.context.restore();
   }
 
