@@ -10,7 +10,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Barlow', Helvetica, sans-serif;
+  font-family: "Barlow", Helvetica, sans-serif;
   font-size: 32px;
 }
 
@@ -118,4 +118,33 @@ img {
 
 .mouseUp {
   cursor: url(/images/hand_blue_1.png) 41.5 50, auto;
+}
+
+/* dev: as long as mobile version is under construction: warning div */
+
+#mobile-warning {
+  font-size: 3rem;
+  line-height: 5rem;
+  width: 100vw;
+  height: 100vh;
+  padding: 10px;
+  background-color: #fafafa;
+  background-image: linear-gradient(
+    #ddd,
+    #fafafa,
+    #fff 50%,
+    #e2e2e2 60%,
+    #fff 95%
+  );
+  @media (min-width: 800px) {
+    display: none;
+  }
+  z-index: 4;
+}
+
+.parent {
+  display: none;
+  @media (min-width: 800px) {
+    display: flex;
+  }
 }
