@@ -122,7 +122,7 @@ img {
 
 /* dev: as long as mobile version is under construction: warning div */
 
-#mobile-warning {
+/* #mobile-warning {
   font-size: 3rem;
   line-height: 5rem;
   width: 100vw;
@@ -147,4 +147,4 @@ img {
   @media (min-width: 800px) {
     display: flex;
   }
-}
+} */
